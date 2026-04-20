@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { launchMarkets } from "@/lib/markets";
 import { siteConfig } from "@/lib/site";
@@ -71,7 +72,7 @@ export default function HomePage() {
                 See supported markets
               </Link>
             </div>
-            <p className="heroMicrocopy">Takes just a few minutes. We’ll confirm what happens next right away.</p>
+            <p className="heroMicrocopy">Takes just a few minutes. We'll confirm what happens next right away.</p>
 
             <div className="trustStrip">
               <div>
@@ -105,19 +106,29 @@ export default function HomePage() {
               </p>
             </article>
 
-            <div className="heroVisualMosaic" aria-hidden="true">
-              <div className="mosaicTall">
-                <span>family guidance</span>
-              </div>
-              <div className="mosaicTopRight">
-                <span>quiet clarity</span>
-              </div>
-              <div className="mosaicBottomLeft">
-                <span>local shortlist</span>
-              </div>
-              <div className="mosaicBottomRight">
-                <span>tour support</span>
-              </div>
+            <div className="referenceShowcase">
+              <article className="referenceFrame referenceFramePrimary">
+                <div className="referenceBadge">Reference image applied</div>
+                <Image
+                  src="/reference/capture1.png"
+                  alt="Reference layout showing an airy editorial homepage composition."
+                  width={827}
+                  height={1286}
+                  className="referenceShot referenceShotPrimary"
+                  priority
+                />
+              </article>
+
+              <article className="referenceFrame referenceFrameSecondary">
+                <div className="referenceBadge">Spacing and hierarchy</div>
+                <Image
+                  src="/reference/capture2.png"
+                  alt="Reference layout showing spacing, typography, and section rhythm."
+                  width={773}
+                  height={1307}
+                  className="referenceShot referenceShotSecondary"
+                />
+              </article>
             </div>
           </div>
         </div>
@@ -169,6 +180,27 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+
+          <div className="guidedPreviewBand">
+            <div className="guidedPreviewCopy">
+              <p className="softEyebrow">Designed for reassurance</p>
+              <h3>The visual pace now follows the same promise as the service.</h3>
+              <p>
+                Based on your reference and the subagent recommendations, the page now leans more editorial:
+                stronger hierarchy, wider spacing, quieter color transitions, and real imagery instead of
+                abstract placeholders.
+              </p>
+            </div>
+            <article className="referenceInsetCard">
+              <Image
+                src="/reference/capture2.png"
+                alt="Reference screenshot used to inform spacing and typographic rhythm."
+                width={773}
+                height={1307}
+                className="referenceShot referenceShotInset"
+              />
+            </article>
+          </div>
         </div>
       </section>
 
@@ -179,7 +211,7 @@ export default function HomePage() {
             <h2>High-trust support matters when timelines, health changes, and family decisions collide.</h2>
             <p className="sectionIntro">
               The reference style you shared leans calm and supportive, and that fits this business well.
-              We’ve carried that softer editorial tone into a layout that still reflects the real operating
+              We've carried that softer editorial tone into a layout that still reflects the real operating
               model in the business plan: intake, matching, coordination, and careful communication.
             </p>
           </div>
@@ -261,7 +293,7 @@ export default function HomePage() {
         <div className="container ctaRibbon">
           <div>
             <p className="softEyebrow">Get help</p>
-            <h2>Start with a short intake and we’ll help shape the next step.</h2>
+            <h2>Start with a short intake and we'll help shape the next step.</h2>
             <p>
               Families can begin with a few practical questions about location, timing, care category, and
               communication preferences.
