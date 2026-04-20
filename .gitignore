@@ -1,0 +1,10 @@
+.next
+node_modules
+.env
+.env.local
+dist
+coverage
+*.pyc
+__pycache__
+phase1_facilities.json
+*.sqlite

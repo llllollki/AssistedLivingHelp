@@ -1,0 +1,387 @@
+:root {
+  --bg: #f7f1e6;
+  --surface: #fffaf3;
+  --surface-strong: #f1e3ca;
+  --ink: #1f2a2e;
+  --muted: #55656c;
+  --line: #d7c8ae;
+  --accent: #bf5b32;
+  --accent-dark: #8f3f21;
+  --forest: #345246;
+  --shadow: 0 18px 40px rgba(31, 42, 46, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #fff9ef 0%, var(--bg) 45%, #efe4d0 100%);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  min-height: 100vh;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font: inherit;
+  color: var(--ink);
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+}
+
+th,
+td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+th {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.container {
+  width: min(1160px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.narrow {
+  width: min(760px, calc(100% - 2rem));
+}
+
+.topNav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(14px);
+  background: rgba(247, 241, 230, 0.8);
+  border-bottom: 1px solid rgba(215, 200, 174, 0.7);
+}
+
+.topNavInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 72px;
+}
+
+.brand {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.topLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--muted);
+}
+
+.hero,
+.section {
+  padding: 4rem 0;
+}
+
+.altSection {
+  background: rgba(255, 250, 243, 0.72);
+  border-top: 1px solid rgba(215, 200, 174, 0.6);
+  border-bottom: 1px solid rgba(215, 200, 174, 0.6);
+}
+
+.heroGrid,
+.intakeLayout {
+  display: grid;
+  grid-template-columns: 1.35fr 0.95fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.hero h1,
+.section h1,
+.section h2 {
+  margin: 0 0 1rem;
+  line-height: 1.05;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 5vw, 5.2rem);
+}
+
+.heroCopy,
+.sectionIntro,
+.sectionHeading p,
+.marketCard p,
+.infoPanel p,
+.stepCard p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.eyebrow {
+  margin: 0 0 0.8rem;
+  color: var(--accent-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.heroActions,
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.6rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.primaryButton {
+  background: var(--accent);
+  color: #fff;
+}
+
+.secondaryButton {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.heroPanel,
+.metricCard,
+.marketCard,
+.stepCard,
+.infoPanel {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.heroPanel,
+.infoPanel {
+  padding: 1.4rem;
+}
+
+.metricsGrid,
+.marketGrid,
+.stepsGrid,
+.twoColumnCards {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.metricsGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.marketGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stepsGrid,
+.twoColumnCards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metricCard,
+.marketCard,
+.stepCard {
+  padding: 1.5rem;
+}
+
+.metricLabel {
+  margin: 0 0 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.74rem;
+}
+
+.metricValue {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.45rem;
+}
+
+.metricDetail {
+  margin: 0;
+  color: var(--muted);
+}
+
+.marketAnchor {
+  color: var(--forest);
+  font-weight: 700;
+}
+
+.sectionHeading {
+  max-width: 700px;
+  margin-bottom: 1.8rem;
+}
+
+.stepCard span {
+  display: inline-flex;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  background: var(--surface-strong);
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.checkList,
+.tagList {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+.tagList li {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+.intakeForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.checkboxRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.checkboxRow label,
+.fullWidth > input[type="checkbox"] {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.consentBox {
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.errorBanner {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #c96c4d;
+  border-radius: 16px;
+  background: #fff1eb;
+  color: #7f2d16;
+}
+
+.confirmationMeta {
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+.checkboxRow input,
+.fullWidth input[type="checkbox"] {
+  width: auto;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 960px) {
+  .heroGrid,
+  .intakeLayout,
+  .metricsGrid,
+  .marketGrid,
+  .stepsGrid,
+  .twoColumnCards {
+    grid-template-columns: 1fr;
+  }
+
+  .intakeForm {
+    grid-template-columns: 1fr;
+  }
+
+  .topNavInner {
+    align-items: start;
+    padding: 0.8rem 0;
+    flex-direction: column;
+  }
+}
