@@ -31,7 +31,7 @@ export default function MarketsPage() {
             />
           </article>
         </div>
-        <div className="marketGrid">
+        <div className="marketGrid refinedMarketGrid">
           {launchMarkets.map((market) => (
             <article key={market.slug} className="marketCard">
               <p className="marketAnchor">{market.hospitalAnchor}</p>

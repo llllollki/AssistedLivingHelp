@@ -159,7 +159,7 @@ th {
 
 .section,
 .hero {
-  padding: 6rem 0;
+  padding: 4.5rem 0;
 }
 
 .altSection {
@@ -169,7 +169,7 @@ th {
 }
 
 .homeHero {
-  padding: 5.4rem 0 4.8rem;
+  padding: 4rem 0 3.5rem;
 }
 
 .homeHeroGrid,
@@ -543,7 +543,7 @@ th {
 }
 
 .editorialBand {
-  padding: 5.8rem 0;
+  padding: 4.5rem 0;
   background:
     linear-gradient(180deg, rgba(219, 232, 234, 0.55), rgba(255, 255, 255, 0.2)),
     var(--surface-cool);
@@ -573,7 +573,8 @@ th {
   gap: 1rem;
 }
 
-.trustPointGrid {
+.trustPointGrid,
+.twoColumnCards {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -717,7 +718,7 @@ th {
 }
 
 .voicesSection {
-  padding-top: 4.5rem;
+  padding-top: 3rem;
 }
 
 .voicesGrid {
@@ -738,7 +739,7 @@ th {
 }
 
 .ctaRibbonSection {
-  padding: 1rem 0 5.5rem;
+  padding: 0 0 4rem;
 }
 
 .ctaRibbon {
@@ -942,6 +943,7 @@ th {
   .partnerBand,
   .intakeLayout,
   .trustPointGrid,
+  .twoColumnCards,
   .voicesGrid,
   .guidedPreviewBand,
   .siteFooterGrid,
@@ -958,7 +960,20 @@ th {
   }
 
   .editorialMediaCluster {
-    min-height: 540px;
+    min-height: 0;
+    display: grid;
+    gap: 1rem;
+    padding-bottom: 0;
+  }
+
+  .editorialMediaCard,
+  .editorialProofCard {
+    position: relative;
+    width: 100%;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
   }
 }
 
@@ -967,7 +982,7 @@ th {
   .section,
   .homeHero,
   .editorialBand {
-    padding: 4.5rem 0;
+    padding: 3rem 0;
   }
 
   .topNavInner {
@@ -979,10 +994,6 @@ th {
   .homeHeroCopy h1 {
     max-width: 12ch;
     font-size: clamp(2.55rem, 11vw, 3.7rem);
-  }
-
-  .editorialMediaCluster {
-    min-height: 520px;
   }
 
   .intakeForm {
@@ -1004,7 +1015,7 @@ th {
   }
 
   .homeHero {
-    padding-top: 4.6rem;
+    padding-top: 2.5rem;
   }
 
   .editorialMediaCluster {
