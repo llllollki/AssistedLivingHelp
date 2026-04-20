@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { launchMarkets } from "@/lib/markets";
 import { siteConfig } from "@/lib/site";
@@ -51,6 +50,15 @@ const voiceCards = [
     source: "Local concierge workflow"
   }
 ];
+
+const editorialFrames = {
+  heroPrimary:
+    "https://static.parastorage.com/services/santa-resources/dist/editor/responsive/odeditor-loader/site-frame-14.webp",
+  heroSecondary:
+    "https://static.parastorage.com/services/santa-resources/dist/editor/responsive/odeditor-loader/site-frame-0.webp",
+  supportPrimary:
+    "https://static.parastorage.com/services/santa-resources/dist/editor/responsive/odeditor-loader/site-frame-10.webp"
+};
 
 export default function HomePage() {
   return (
@@ -106,28 +114,38 @@ export default function HomePage() {
               </p>
             </article>
 
-            <div className="referenceShowcase">
-              <article className="referenceFrame referenceFramePrimary">
-                <div className="referenceBadge">Reference image applied</div>
-                <Image
-                  src="/reference/capture1.png"
-                  alt="Reference layout showing an airy editorial homepage composition."
-                  width={827}
-                  height={1286}
-                  className="referenceShot referenceShotPrimary"
-                  priority
+            <div className="editorialMediaCluster">
+              <article className="editorialMediaCard editorialMediaPrimary">
+                <img
+                  src={editorialFrames.heroPrimary}
+                  alt="Editorial image card inspired by the sample site's framed visuals."
+                  className="editorialMediaImage"
                 />
+                <div className="editorialMediaScrim" />
+                <div className="editorialMediaCaption">
+                  <p className="metricLabel">Concierge intake</p>
+                  <strong>Families get a guided starting point instead of a wide open directory.</strong>
+                  <span>We focus first on fit, timing, contact preferences, and practical next steps.</span>
+                </div>
               </article>
 
-              <article className="referenceFrame referenceFrameSecondary">
-                <div className="referenceBadge">Spacing and hierarchy</div>
-                <Image
-                  src="/reference/capture2.png"
-                  alt="Reference layout showing spacing, typography, and section rhythm."
-                  width={773}
-                  height={1307}
-                  className="referenceShot referenceShotSecondary"
+              <article className="editorialMediaCard editorialMediaSecondary">
+                <img
+                  src={editorialFrames.heroSecondary}
+                  alt="Supporting editorial image panel."
+                  className="editorialMediaImage"
                 />
+                <div className="editorialMediaChip">Local shortlist support</div>
+              </article>
+
+              <article className="editorialProofCard">
+                <p className="softEyebrow">What families feel</p>
+                <h3>Calmer guidance, clearer follow-through.</h3>
+                <ul className="editorialChecklist compactChecklist">
+                  <li>One primary intake path</li>
+                  <li>Human review before outreach</li>
+                  <li>Scheduling help when it matters</li>
+                </ul>
               </article>
             </div>
           </div>
@@ -184,21 +202,22 @@ export default function HomePage() {
           <div className="guidedPreviewBand">
             <div className="guidedPreviewCopy">
               <p className="softEyebrow">Designed for reassurance</p>
-              <h3>The visual pace now follows the same promise as the service.</h3>
+              <h3>Families see a calmer path from intake to real conversations.</h3>
               <p>
-                Based on your reference and the subagent recommendations, the page now leans more editorial:
-                stronger hierarchy, wider spacing, quieter color transitions, and real imagery instead of
-                abstract placeholders.
+                The visual language now mirrors the service model: fewer distractions, more breathing room,
+                and a guided flow that emphasizes trust, local knowledge, and responsive coordination.
               </p>
             </div>
-            <article className="referenceInsetCard">
-              <Image
-                src="/reference/capture2.png"
-                alt="Reference screenshot used to inform spacing and typographic rhythm."
-                width={773}
-                height={1307}
-                className="referenceShot referenceShotInset"
+            <article className="guidedPreviewVisual">
+              <img
+                src={editorialFrames.supportPrimary}
+                alt="Editorial support image used in the guided preview section."
+                className="editorialMediaImage"
               />
+              <div className="guidedPreviewBadge">
+                <strong>3-step help model</strong>
+                <span>Intake, shortlist review, scheduling support</span>
+              </div>
             </article>
           </div>
         </div>
@@ -210,9 +229,9 @@ export default function HomePage() {
             <p className="softEyebrow">Why families choose a guided process</p>
             <h2>High-trust support matters when timelines, health changes, and family decisions collide.</h2>
             <p className="sectionIntro">
-              The reference style you shared leans calm and supportive, and that fits this business well.
-              We've carried that softer editorial tone into a layout that still reflects the real operating
-              model in the business plan: intake, matching, coordination, and careful communication.
+              Families often need a path that feels calmer, more personal, and easier to act on. The
+              experience is designed to support that reality while still matching the operating model in the
+              business plan: intake, matching, coordination, and careful communication.
             </p>
           </div>
           <div className="trustPointGrid">

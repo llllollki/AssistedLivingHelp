@@ -1,4 +1,6 @@
 :root {
+  --font-body: Aptos, "Segoe UI Variable Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --bg: #f5f1e8;
   --surface: #fbf8f2;
   --surface-strong: #eef3ef;
@@ -29,8 +31,15 @@ body {
     radial-gradient(circle at top left, rgba(219, 232, 234, 0.55), transparent 34%),
     linear-gradient(180deg, #fcfaf6 0%, var(--bg) 100%);
   color: var(--ink);
-  font-family: Aptos, "Segoe UI Variable Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-body);
   text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
 }
 
 a {
@@ -49,7 +58,7 @@ h4,
 h5,
 h6,
 .brand {
-  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-family: var(--font-display);
   letter-spacing: -0.03em;
   font-weight: 600;
 }
@@ -317,14 +326,15 @@ th {
   line-height: 1.6;
 }
 
-.referenceShowcase {
+.editorialMediaCluster {
   position: relative;
   min-height: 620px;
   padding: 0.35rem 0 1rem 0;
 }
 
-.referenceFrame,
-.referenceInsetCard {
+.editorialMediaCard,
+.guidedPreviewVisual,
+.editorialProofCard {
   overflow: hidden;
   border-radius: 30px;
   border: 1px solid rgba(73, 97, 88, 0.12);
@@ -332,23 +342,38 @@ th {
   box-shadow: 0 28px 70px rgba(27, 45, 37, 0.12);
 }
 
-.referenceFrame {
+.editorialMediaCard,
+.editorialProofCard {
   position: absolute;
 }
 
-.referenceFramePrimary {
+.editorialMediaPrimary {
   top: 0;
   left: 0;
   width: min(100%, 360px);
 }
 
-.referenceFrameSecondary {
+.editorialMediaSecondary {
+  top: 180px;
   right: 0;
-  bottom: 0;
   width: min(70%, 270px);
 }
 
-.referenceBadge {
+.editorialProofCard {
+  right: 1rem;
+  bottom: 0;
+  width: min(76%, 290px);
+  padding: 1.35rem 1.35rem 1.45rem;
+  background: linear-gradient(180deg, rgba(255, 250, 243, 0.95), rgba(255, 255, 255, 0.92));
+}
+
+.editorialProofCard h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.45rem;
+  line-height: 1.08;
+}
+
+.editorialMediaChip {
   position: absolute;
   left: 1rem;
   top: 1rem;
@@ -363,23 +388,55 @@ th {
   letter-spacing: 0.04em;
 }
 
-.referenceShot {
+.editorialMediaImage {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
-.referenceShotPrimary {
+.editorialMediaPrimary .editorialMediaImage {
   aspect-ratio: 827 / 1286;
-  object-fit: cover;
-  object-position: center top;
 }
 
-.referenceShotSecondary,
-.referenceShotInset {
+.editorialMediaSecondary .editorialMediaImage,
+.guidedPreviewVisual .editorialMediaImage {
   aspect-ratio: 773 / 1307;
-  object-fit: cover;
-  object-position: center top;
+}
+
+.editorialMediaScrim {
+  position: absolute;
+  inset: auto 0 0;
+  height: 48%;
+  background: linear-gradient(180deg, transparent 0%, rgba(21, 28, 24, 0.72) 100%);
+}
+
+.editorialMediaCaption {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  display: grid;
+  gap: 0.45rem;
+  color: #fff;
+}
+
+.editorialMediaCaption strong {
+  font-size: 1.08rem;
+  line-height: 1.4;
+}
+
+.editorialMediaCaption span,
+.guidedPreviewBadge span {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.compactChecklist {
+  margin-top: 0.8rem;
+  line-height: 1.8;
 }
 
 .sectionHeaderSplit {
@@ -739,8 +796,27 @@ th {
   margin: 0;
 }
 
-.referenceInsetCard {
+.guidedPreviewVisual {
   position: relative;
+  min-height: 100%;
+}
+
+.guidedPreviewBadge {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: grid;
+  gap: 0.3rem;
+  max-width: 210px;
+  padding: 0.9rem 1rem;
+  border-radius: 20px;
+  background: rgba(21, 28, 24, 0.78);
+  backdrop-filter: blur(8px);
+  color: #fff;
+}
+
+.guidedPreviewBadge strong {
+  font-size: 0.96rem;
 }
 
 @media (max-width: 1040px) {
@@ -766,7 +842,7 @@ th {
     grid-template-columns: 1fr;
   }
 
-  .referenceShowcase {
+  .editorialMediaCluster {
     min-height: 540px;
   }
 }
@@ -790,7 +866,7 @@ th {
     font-size: clamp(2.55rem, 11vw, 3.7rem);
   }
 
-  .referenceShowcase {
+  .editorialMediaCluster {
     min-height: 520px;
   }
 
@@ -816,14 +892,15 @@ th {
     padding-top: 4.6rem;
   }
 
-  .referenceShowcase {
+  .editorialMediaCluster {
     min-height: auto;
     display: grid;
     gap: 1rem;
     padding-bottom: 0;
   }
 
-  .referenceFrame {
+  .editorialMediaCard,
+  .editorialProofCard {
     position: relative;
     width: 100%;
     top: auto;
