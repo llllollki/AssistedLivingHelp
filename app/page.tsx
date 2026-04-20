@@ -1,94 +1,297 @@
 import Link from "next/link";
-import { MetricCard } from "@/components/shell/MetricCard";
-import { SectionHeading } from "@/components/shell/SectionHeading";
 import { launchMarkets } from "@/lib/markets";
 import { siteConfig } from "@/lib/site";
+
+const serviceCards = [
+  {
+    title: "Short guided intake",
+    body: "A few questions help us understand location, timing, care category, and how you prefer to be contacted.",
+    accent: "softMint"
+  },
+  {
+    title: "Curated local shortlist",
+    body: "We work from a vetted facility subset in our launch markets rather than a broad, unfiltered directory.",
+    accent: "softSand"
+  },
+  {
+    title: "Call and tour coordination",
+    body: "We help narrow next steps and coordinate with facilities when families need extra support getting conversations scheduled.",
+    accent: "softSky"
+  }
+];
+
+const trustPoints = [
+  {
+    label: "Local launch focus",
+    value: "5 markets",
+    detail: "Serving select Southwest Riverside County hospital-centered markets."
+  },
+  {
+    label: "Human-guided support",
+    value: "Concierge-first",
+    detail: "Families are not left alone to sort through options without support."
+  },
+  {
+    label: "Careful information handling",
+    value: "Consent-based",
+    detail: "Lead details and next-step outreach are designed around explicit permissions."
+  }
+];
+
+const voiceCards = [
+  {
+    quote:
+      "You should not have to decode the next step alone. We help bring structure, clarity, and follow-through to the search process.",
+    source: "Assisted Living Help approach"
+  },
+  {
+    quote:
+      "Our role is to help families move from uncertainty to real conversations with communities that may fit their needs and timing.",
+    source: "Local concierge workflow"
+  }
+];
 
 export default function HomePage() {
   return (
     <>
-      <section className="hero">
-        <div className="container heroGrid">
-          <div>
-            <p className="eyebrow">California Launch Markets</p>
-            <h1>{siteConfig.name}</h1>
-            <p className="heroCopy">
-              Guided assisted living matching for families who need help choosing communities,
-              coordinating next steps, and getting to real calls or tours faster.
+      <section className="homeHero">
+        <div className="container homeHeroGrid">
+          <div className="homeHeroCopy">
+            <p className="softEyebrow">Serving Temecula, Murrieta, Menifee, Inland Valley, and nearby markets</p>
+            <h1>Guided assisted living support for families who need clarity fast.</h1>
+            <p className="heroLead">
+              {siteConfig.name} helps families understand their options, narrow a vetted local shortlist,
+              and move toward calls or tours with more confidence and less friction.
             </p>
             <div className="heroActions">
               <Link className="primaryButton" href="/get-help">
                 Start the intake
               </Link>
               <Link className="secondaryButton" href="/markets">
-                Explore launch markets
+                See supported markets
               </Link>
             </div>
+            <p className="heroMicrocopy">Takes just a few minutes. We’ll confirm what happens next right away.</p>
+
+            <div className="trustStrip">
+              <div>
+                <strong>Local focus</strong>
+                <span>Southwest Riverside County launch markets</span>
+              </div>
+              <div>
+                <strong>Human support</strong>
+                <span>Help with matching, follow-up, and scheduling</span>
+              </div>
+              <div>
+                <strong>Vetted subset</strong>
+                <span>Built from licensed facility records and launch-market filtering</span>
+              </div>
+            </div>
           </div>
-          <div className="heroPanel">
-            <h2>What the MVP includes</h2>
-            <ul className="checkList">
-              <li>Short guided intake for families</li>
-              <li>Immediate confirmation and next-step messaging</li>
-              <li>Internal lead, matching, outreach, and scheduling workflow</li>
-              <li>Facility partner and business development tracking</li>
-            </ul>
+
+          <div className="heroEditorialPanel">
+            <article className="heroTrustCard">
+              <p className="softEyebrow">What happens after you contact us</p>
+              <h2>Support that feels more guided and less overwhelming.</h2>
+              <ul className="editorialChecklist">
+                <li>Submit a short intake with contact preferences and care basics</li>
+                <li>Receive confirmation right away</li>
+                <li>Get coordinator follow-up and shortlist review</li>
+                <li>Move toward calls or tours with responsive facilities</li>
+              </ul>
+              <p className="trustNote">
+                We help coordinate the next step. We do not promise placement, guaranteed availability, or
+                guaranteed admissions.
+              </p>
+            </article>
+
+            <div className="heroVisualMosaic" aria-hidden="true">
+              <div className="mosaicTall">
+                <span>family guidance</span>
+              </div>
+              <div className="mosaicTopRight">
+                <span>quiet clarity</span>
+              </div>
+              <div className="mosaicBottomLeft">
+                <span>local shortlist</span>
+              </div>
+              <div className="mosaicBottomRight">
+                <span>tour support</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <div className="container metricsGrid">
-          <MetricCard label="Launch markets" value="5" detail="Hospital-centered regions for Phase 1." />
-          <MetricCard label="Operating model" value="Concierge-first" detail="Human-assisted matching and outreach." />
-          <MetricCard label="Data source" value="SQLite + Supabase" detail="Vetted facility subset, not a raw directory." />
-        </div>
-      </section>
-
-      <section className="section altSection">
         <div className="container">
-          <SectionHeading
-            eyebrow="How it works"
-            title="A simpler path from inquiry to tour"
-            body="The first release is built around intake, matching, and operations rather than a wide-open directory."
-          />
-          <div className="stepsGrid">
-            <article className="stepCard">
-              <span>01</span>
-              <h3>Share your needs</h3>
-              <p>Families submit a short intake with contact preferences, timing, location, and care category.</p>
+          <div className="sectionHeaderSplit">
+            <div>
+              <p className="softEyebrow">How we help</p>
+              <h2>A more supportive path from first inquiry to next conversation.</h2>
+            </div>
+            <p className="sectionSideCopy">
+              The MVP is intentionally intake-first and concierge-led. Families get structure, trust, and
+              scheduling help before they ever need a long browse-heavy experience.
+            </p>
+          </div>
+
+          <div className="serviceLayout">
+            <article className="featureStoryCard">
+              <p className="softEyebrow">Concierge workflow</p>
+              <h3>We help turn interest into real next steps.</h3>
+              <p>
+                Instead of dropping families into a wide marketplace, we guide intake, review a vetted local
+                subset, and support outreach or scheduling when the path forward feels unclear.
+              </p>
+              <div className="featureStoryBands">
+                <div>
+                  <strong>1.</strong>
+                  <span>Share needs and timing</span>
+                </div>
+                <div>
+                  <strong>2.</strong>
+                  <span>Review a likely-fit shortlist</span>
+                </div>
+                <div>
+                  <strong>3.</strong>
+                  <span>Coordinate calls or tours</span>
+                </div>
+              </div>
             </article>
-            <article className="stepCard">
-              <span>02</span>
-              <h3>Review likely-fit options</h3>
-              <p>Staff and matching rules create a shortlist from a vetted local facility subset.</p>
-            </article>
-            <article className="stepCard">
-              <span>03</span>
-              <h3>Coordinate next steps</h3>
-              <p>We track outreach, responses, and scheduling so families do not get lost in the process.</p>
-            </article>
+
+            <div className="supportCardGrid">
+              {serviceCards.map((card) => (
+                <article key={card.title} className={`supportMiniCard ${card.accent}`}>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Phase 1 markets"
-            title="Local launch areas"
-            body="The initial release stays intentionally narrow around defined hospital-centered markets."
-          />
-          <div className="marketGrid">
-            {launchMarkets.map((market) => (
-              <article key={market.slug} className="marketCard">
-                <p className="marketAnchor">{market.hospitalAnchor}</p>
-                <h3>{market.name}</h3>
-                <p>{market.summary}</p>
-                <Link href={`/markets/${market.slug}`}>View market details</Link>
+      <section className="editorialBand">
+        <div className="container editorialBandGrid">
+          <div>
+            <p className="softEyebrow">Why families choose a guided process</p>
+            <h2>High-trust support matters when timelines, health changes, and family decisions collide.</h2>
+            <p className="sectionIntro">
+              The reference style you shared leans calm and supportive, and that fits this business well.
+              We’ve carried that softer editorial tone into a layout that still reflects the real operating
+              model in the business plan: intake, matching, coordination, and careful communication.
+            </p>
+          </div>
+          <div className="trustPointGrid">
+            {trustPoints.map((point) => (
+              <article key={point.label} className="trustPointCard">
+                <p className="metricLabel">{point.label}</p>
+                <strong className="metricValue">{point.value}</strong>
+                <p className="metricDetail">{point.detail}</p>
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="sectionHeaderSplit">
+            <div>
+              <p className="softEyebrow">Launch markets</p>
+              <h2>Intentionally local from day one.</h2>
+            </div>
+            <p className="sectionSideCopy">
+              We are not presenting a statewide directory yet. Phase 1 is built around defined
+              hospital-centered markets and a vetted facility subset in those areas.
+            </p>
+          </div>
+
+          <div className="marketEditorialGrid">
+            <article className="marketLeadCard">
+              <p className="softEyebrow">Current service area</p>
+              <h3>Focused on select Southwest Riverside County markets.</h3>
+              <p>
+                Launch-market boundaries still matter to matching quality, scheduling realism, and partner
+                operations. Starting narrow keeps the experience more trustworthy.
+              </p>
+              <Link className="inlineTextLink" href="/get-help">
+                Start with your area and timing
+              </Link>
+            </article>
+
+            <div className="marketGrid refinedMarketGrid">
+              {launchMarkets.map((market) => (
+                <article key={market.slug} className="marketCard refinedMarketCard">
+                  <p className="marketAnchor">{market.hospitalAnchor}</p>
+                  <h3>{market.name}</h3>
+                  <p>{market.summary}</p>
+                  <ul className="tagList">
+                    {market.cities.map((city) => (
+                      <li key={city}>{city}</li>
+                    ))}
+                  </ul>
+                  <Link href={`/markets/${market.slug}`}>View market details</Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section voicesSection">
+        <div className="container">
+          <div className="sectionHeaderCentered">
+            <p className="softEyebrow">Voices of support</p>
+            <h2>A calmer, more personal tone without losing business clarity.</h2>
+          </div>
+          <div className="voicesGrid">
+            {voiceCards.map((voice) => (
+              <article key={voice.source} className="voiceCard">
+                <p>{voice.quote}</p>
+                <span>{voice.source}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="ctaRibbonSection">
+        <div className="container ctaRibbon">
+          <div>
+            <p className="softEyebrow">Get help</p>
+            <h2>Start with a short intake and we’ll help shape the next step.</h2>
+            <p>
+              Families can begin with a few practical questions about location, timing, care category, and
+              communication preferences.
+            </p>
+          </div>
+          <div className="ctaRibbonActions">
+            <Link className="primaryButton" href="/get-help">
+              Begin the intake
+            </Link>
+            <Link className="secondaryButton" href="/confirmation">
+              See confirmation flow
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section partnerSection">
+        <div className="container partnerBand">
+          <div>
+            <p className="softEyebrow">For assisted living communities</p>
+            <h2>Facility partners can participate without turning the site into a pay-to-rank directory.</h2>
+            <p>
+              The business plan includes listing packages, premium profile options, and scheduling support.
+              Any featured or priority placement should remain clearly disclosed and should never override fit,
+              trust, or compliance.
+            </p>
+          </div>
+          <Link className="secondaryButton" href="/partners">
+            Partner information
+          </Link>
         </div>
       </section>
     </>

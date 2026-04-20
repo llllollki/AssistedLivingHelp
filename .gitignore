@@ -8,3 +8,4 @@ coverage
 __pycache__
 phase1_facilities.json
 *.sqlite
+.vercel
