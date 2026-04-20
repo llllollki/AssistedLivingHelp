@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { launchMarkets } from "@/lib/markets";
 import { siteConfig } from "@/lib/site";
@@ -52,12 +53,10 @@ const voiceCards = [
 ];
 
 const editorialFrames = {
-  heroPrimary:
-    "https://static.parastorage.com/services/santa-resources/dist/editor/responsive/odeditor-loader/site-frame-14.webp",
-  heroSecondary:
-    "https://static.parastorage.com/services/santa-resources/dist/editor/responsive/odeditor-loader/site-frame-0.webp",
-  supportPrimary:
-    "https://static.parastorage.com/services/santa-resources/dist/editor/responsive/odeditor-loader/site-frame-10.webp"
+  heroPrimary: "/images/hero-guidance.png",
+  heroSecondary: "/images/hero-support.png",
+  supportPrimary: "/images/guided-room.png",
+  trustImage: "/images/process-walk.png"
 };
 
 export default function HomePage() {
@@ -116,10 +115,13 @@ export default function HomePage() {
 
             <div className="editorialMediaCluster">
               <article className="editorialMediaCard editorialMediaPrimary">
-                <img
+                <Image
                   src={editorialFrames.heroPrimary}
-                  alt="Editorial image card inspired by the sample site's framed visuals."
+                  alt="An older adult speaking with two care advisors in a bright living room."
                   className="editorialMediaImage"
+                  width={862}
+                  height={760}
+                  priority
                 />
                 <div className="editorialMediaScrim" />
                 <div className="editorialMediaCaption">
@@ -130,10 +132,12 @@ export default function HomePage() {
               </article>
 
               <article className="editorialMediaCard editorialMediaSecondary">
-                <img
+                <Image
                   src={editorialFrames.heroSecondary}
-                  alt="Supporting editorial image panel."
+                  alt="Two older adults holding hands for reassurance and support."
                   className="editorialMediaImage"
+                  width={790}
+                  height={796}
                 />
                 <div className="editorialMediaChip">Local shortlist support</div>
               </article>
@@ -209,10 +213,12 @@ export default function HomePage() {
               </p>
             </div>
             <article className="guidedPreviewVisual">
-              <img
+              <Image
                 src={editorialFrames.supportPrimary}
-                alt="Editorial support image used in the guided preview section."
+                alt="A calm living room with natural light, soft seating, and a welcoming atmosphere."
                 className="editorialMediaImage"
+                width={530}
+                height={395}
               />
               <div className="guidedPreviewBadge">
                 <strong>3-step help model</strong>
@@ -234,14 +240,26 @@ export default function HomePage() {
               business plan: intake, matching, coordination, and careful communication.
             </p>
           </div>
-          <div className="trustPointGrid">
-            {trustPoints.map((point) => (
-              <article key={point.label} className="trustPointCard">
-                <p className="metricLabel">{point.label}</p>
-                <strong className="metricValue">{point.value}</strong>
-                <p className="metricDetail">{point.detail}</p>
-              </article>
-            ))}
+          <div className="trustBandAside">
+            <div className="trustPointGrid">
+              {trustPoints.map((point) => (
+                <article key={point.label} className="trustPointCard">
+                  <p className="metricLabel">{point.label}</p>
+                  <strong className="metricValue">{point.value}</strong>
+                  <p className="metricDetail">{point.detail}</p>
+                </article>
+              ))}
+            </div>
+
+            <article className="trustInsetImage">
+              <Image
+                src={editorialFrames.trustImage}
+                alt="A caregiver walking beside an older adult in a bright community space."
+                className="editorialMediaImage"
+                width={766}
+                height={765}
+              />
+            </article>
           </div>
         </div>
       </section>

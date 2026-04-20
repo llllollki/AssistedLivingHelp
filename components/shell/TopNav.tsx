@@ -12,7 +12,6 @@ export function TopNav() {
           <Link href="/markets">Markets</Link>
           <Link href="/get-help">Get Help</Link>
           <Link href="/partners">For Facilities</Link>
-          <Link href="/admin">Admin</Link>
         </nav>
       </div>
     </header>

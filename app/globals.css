@@ -47,6 +47,23 @@ a {
   text-decoration: none;
 }
 
+.skipLink {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 30;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: var(--accent-dark);
+  color: #fff;
+  font-size: 0.92rem;
+  transition: top 140ms ease;
+}
+
+.skipLink:focus {
+  top: 1rem;
+}
+
 main {
   min-height: 100vh;
 }
@@ -541,6 +558,11 @@ th {
   align-items: start;
 }
 
+.trustBandAside {
+  display: grid;
+  gap: 1rem;
+}
+
 .trustPointGrid,
 .metricsGrid,
 .marketGrid,
@@ -561,6 +583,23 @@ th {
 .stepCard,
 .voiceCard {
   padding: 1.6rem;
+}
+
+.trustInsetImage,
+.asideMediaCard,
+.marketIntroImage {
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(73, 97, 88, 0.12);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: var(--shadow-soft);
+}
+
+.asideMediaImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .metricLabel {
@@ -588,6 +627,26 @@ th {
   grid-template-columns: minmax(270px, 0.8fr) minmax(0, 1.2fr);
   gap: 1.4rem;
   align-items: start;
+}
+
+.marketIntroBand {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  gap: 1.5rem;
+  align-items: center;
+  margin: 2rem 0;
+  padding: 1.35rem;
+  border-radius: 30px;
+  border: 1px solid rgba(73, 97, 88, 0.12);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(239, 229, 213, 0.48));
+  box-shadow: var(--shadow-soft);
+}
+
+.marketIntroCopy h2 {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.7rem, 2vw, 2.25rem);
+  line-height: 1.08;
 }
 
 .marketLeadCard {
@@ -711,6 +770,54 @@ th {
   box-shadow: var(--shadow-soft);
 }
 
+.siteFooter {
+  margin-top: 2rem;
+  padding: 2.8rem 0 1.5rem;
+  background:
+    linear-gradient(180deg, rgba(239, 229, 213, 0.44), rgba(255, 255, 255, 0.9));
+  border-top: 1px solid rgba(73, 97, 88, 0.1);
+}
+
+.siteFooterGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.siteFooterIntro,
+.siteFooterNote,
+.siteFooterBottom p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.siteFooterLinks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.siteFooterHeading {
+  margin: 0 0 0.7rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.siteFooterNav {
+  display: grid;
+  gap: 0.55rem;
+  color: var(--muted);
+}
+
+.siteFooterBottom {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(73, 97, 88, 0.08);
+}
+
 .intakeForm {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -720,6 +827,11 @@ th {
   border-radius: 24px;
   background: var(--surface);
   box-shadow: var(--shadow);
+}
+
+.intakeAside {
+  display: grid;
+  gap: 1.15rem;
 }
 
 .fullWidth {
@@ -824,13 +936,16 @@ th {
   .editorialBandGrid,
   .serviceLayout,
   .marketEditorialGrid,
+  .marketIntroBand,
   .sectionHeaderSplit,
   .ctaRibbon,
   .partnerBand,
   .intakeLayout,
   .trustPointGrid,
   .voicesGrid,
-  .guidedPreviewBand {
+  .guidedPreviewBand,
+  .siteFooterGrid,
+  .siteFooterLinks {
     grid-template-columns: 1fr;
   }
 
@@ -928,11 +1043,15 @@ th {
   .featureStoryCard,
   .supportMiniCard,
   .trustPointCard,
+  .trustInsetImage,
+  .asideMediaCard,
+  .marketIntroBand,
   .marketCard,
   .voiceCard,
   .guidedPreviewBand,
   .ctaRibbon,
-  .partnerBand {
+  .partnerBand,
+  .siteFooter {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
   }

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { launchMarkets } from "@/lib/markets";
 
 type GetHelpPageProps = {
@@ -130,7 +131,16 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
             </div>
           </form>
         </div>
-        <aside className="infoPanel">
+        <aside className="infoPanel intakeAside">
+          <div className="asideMediaCard">
+            <Image
+              src="/images/intake-support.png"
+              alt="An older adult smiling with a younger family member nearby."
+              width={512}
+              height={512}
+              className="asideMediaImage"
+            />
+          </div>
           <h2>What happens next</h2>
           <ul className="checkList">
             <li>Your intake is logged for the internal care team.</li>
