@@ -1181,6 +1181,202 @@ th {
   font-size: 0.95rem;
 }
 
+.facilityCardLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 20px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.facilityCardLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(27, 45, 37, 0.12);
+}
+
+.facilityCardLink:hover .facilityCard {
+  border-color: var(--accent);
+}
+
+/* === Filter panel === */
+.filterPanel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.filterForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.filterField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 150px;
+}
+
+.filterField label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filterField input,
+.filterField select {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--ink);
+}
+
+.filterFieldWide {
+  flex: 1 1 220px;
+}
+
+.filterActions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.filterSubmit {
+  padding: 0.55rem 1.25rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.filterSubmit:hover {
+  background: var(--accent-dark);
+}
+
+.filterClear {
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.facilityResultCount {
+  font-size: 0.93rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+/* === Facilities help band === */
+.facilitiesHelpBand {
+  background: var(--surface-cool);
+  border-top: 1px solid var(--line);
+  padding: 3.5rem 0;
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.facilitiesHelpText {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1.25rem;
+  color: var(--ink);
+}
+
+/* === Facility profile page === */
+.facilityProfileGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.facilityProfileCard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.facilityProfileCard h2 {
+  margin: 0 0 1.5rem;
+  font-size: 1.3rem;
+}
+
+.facilityDl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.55rem 1.5rem;
+  margin: 0;
+}
+
+.facilityDl dt {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 0.15rem;
+}
+
+.facilityDl dd {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.facilitiesCta {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.facilitiesCta h2 {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+}
+
+.facilitiesCta p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.ctaSubtext {
+  font-size: 0.88rem !important;
+  color: var(--muted) !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+}
+
+.backLink {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
 .tableWrap {
   overflow-x: auto;
   border: 1px solid var(--line);
@@ -1199,7 +1395,8 @@ th {
   .voicesGrid,
   .stepsRow,
   .serviceCardsGrid,
-  .siteFooterGrid {
+  .siteFooterGrid,
+  .facilityProfileGrid {
     grid-template-columns: 1fr;
   }
 
@@ -1278,6 +1475,16 @@ th {
 
   .intakeForm {
     grid-template-columns: 1fr;
+  }
+
+  .filterForm {
+    flex-direction: column;
+  }
+
+  .filterField,
+  .filterFieldWide {
+    min-width: 0;
+    width: 100%;
   }
 
   .mosaicGrid {
