@@ -265,60 +265,162 @@ alter table public.alh_matches enable row level security;
 alter table public.alh_interactions enable row level security;
 alter table public.alh_appointments enable row level security;
 
+-- ============================================================
+-- RLS helper functions
+-- SECURITY DEFINER lets these functions read staff_users
+-- without triggering the policies they're used to enforce,
+-- breaking the circular dependency.
+-- ============================================================
+
+create or replace function public.is_staff()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.staff_users su
+    where su.id = auth.uid()
+      and su.is_active = true
+  )
+$$;
+
+create or replace function public.is_admin_staff()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.staff_users su
+    where su.id = auth.uid()
+      and su.is_active = true
+      and su.role = 'admin'
+  )
+$$;
+
+-- ============================================================
+-- staff_users
+-- Any active staff member can read; only admins can write.
+-- ============================================================
 drop policy if exists "staff can read staff_users" on public.staff_users;
 create policy "staff can read staff_users"
 on public.staff_users for select
-using (auth.role() = 'authenticated');
+using (public.is_staff());
 
+drop policy if exists "admin can manage staff_users" on public.staff_users;
+create policy "admin can manage staff_users"
+on public.staff_users for all
+using (public.is_admin_staff())
+with check (public.is_admin_staff());
+
+-- ============================================================
+-- launch_markets
+-- Any authenticated user can read (needed for intake form and
+-- public facility search). Only staff can write.
+-- ============================================================
 drop policy if exists "staff can read markets" on public.launch_markets;
-create policy "staff can read markets"
+create policy "authenticated can read markets"
 on public.launch_markets for select
 using (auth.role() = 'authenticated');
 
+drop policy if exists "staff can write markets" on public.launch_markets;
+create policy "staff can write markets"
+on public.launch_markets for insert
+with check (public.is_staff());
+
+drop policy if exists "staff can update markets" on public.launch_markets;
+create policy "staff can update markets"
+on public.launch_markets for update
+using (public.is_staff())
+with check (public.is_staff());
+
+-- ============================================================
+-- alh_facilities
+-- Staff: full access.
+-- Public authenticated users: read-only on public_visibility=true rows.
+-- RLS SELECT policies are OR'd, so staff see everything via the
+-- staff policy; public users see only the visible subset.
+-- ============================================================
 drop policy if exists "staff can manage alh_facilities" on public.alh_facilities;
 create policy "staff can manage alh_facilities"
 on public.alh_facilities for all
-using (auth.role() = 'authenticated')
-with check (auth.role() = 'authenticated');
+using (public.is_staff())
+with check (public.is_staff());
 
+drop policy if exists "public can browse visible facilities" on public.alh_facilities;
+create policy "public can browse visible facilities"
+on public.alh_facilities for select
+using (
+  auth.role() = 'authenticated'
+  and public_visibility = true
+);
+
+-- ============================================================
+-- alh_facility_contacts — staff only
+-- ============================================================
 drop policy if exists "staff can manage alh_facility_contacts" on public.alh_facility_contacts;
 create policy "staff can manage alh_facility_contacts"
 on public.alh_facility_contacts for all
-using (auth.role() = 'authenticated')
-with check (auth.role() = 'authenticated');
+using (public.is_staff())
+with check (public.is_staff());
 
+-- ============================================================
+-- leads — staff only
+-- ============================================================
 drop policy if exists "staff can manage leads" on public.leads;
 create policy "staff can manage leads"
 on public.leads for all
-using (auth.role() = 'authenticated')
-with check (auth.role() = 'authenticated');
+using (public.is_staff())
+with check (public.is_staff());
 
+-- ============================================================
+-- lead_profiles — staff only
+-- ============================================================
 drop policy if exists "staff can manage lead_profiles" on public.lead_profiles;
 create policy "staff can manage lead_profiles"
 on public.lead_profiles for all
-using (auth.role() = 'authenticated')
-with check (auth.role() = 'authenticated');
+using (public.is_staff())
+with check (public.is_staff());
 
+-- ============================================================
+-- consents — staff only
+-- (intake API writes consents via the service role client,
+--  which bypasses RLS; this blocks public session reads)
+-- ============================================================
 drop policy if exists "staff can manage consents" on public.consents;
 create policy "staff can manage consents"
 on public.consents for all
-using (auth.role() = 'authenticated')
-with check (auth.role() = 'authenticated');
+using (public.is_staff())
+with check (public.is_staff());
 
+-- ============================================================
+-- alh_matches — staff only
+-- ============================================================
 drop policy if exists "staff can manage alh_matches" on public.alh_matches;
 create policy "staff can manage alh_matches"
 on public.alh_matches for all
-using (auth.role() = 'authenticated')
-with check (auth.role() = 'authenticated');
+using (public.is_staff())
+with check (public.is_staff());
 
+-- ============================================================
+-- alh_interactions — staff only
+-- ============================================================
 drop policy if exists "staff can manage alh_interactions" on public.alh_interactions;
 create policy "staff can manage alh_interactions"
 on public.alh_interactions for all
-using (auth.role() = 'authenticated')
-with check (auth.role() = 'authenticated');
+using (public.is_staff())
+with check (public.is_staff());
 
+-- ============================================================
+-- alh_appointments — staff only
+-- ============================================================
 drop policy if exists "staff can manage alh_appointments" on public.alh_appointments;
 create policy "staff can manage alh_appointments"
 on public.alh_appointments for all
-using (auth.role() = 'authenticated')
-with check (auth.role() = 'authenticated');
+using (public.is_staff())
+with check (public.is_staff());

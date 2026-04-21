@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/shell/Logo";
+import { NavAuthButton } from "@/components/shell/NavAuthButton";
 
 export function TopNav() {
   return (
@@ -13,9 +14,7 @@ export function TopNav() {
           <Link href="/get-help">How It Works</Link>
           <Link href="/partners">For Facilities</Link>
         </nav>
-        <Link href="/get-help" className="navCta">
-          Get Help
-        </Link>
+        <NavAuthButton />
       </div>
     </header>
   );
