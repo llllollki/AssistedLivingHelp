@@ -100,9 +100,9 @@ export default function HomePage() {
             <Image
               src="/images/steps-family-room.png"
               alt="Older adults, a caregiver, and a baby sharing a warm family moment in a living room."
+              className="stepsImageBandImg"
               width={1160}
               height={1024}
-              style={{ display: "block", width: "100%", aspectRatio: "16/8", objectFit: "cover", objectPosition: "center 34%" }}
             />
           </div>
         </div>

@@ -575,14 +575,21 @@ th {
   overflow: hidden;
   margin-top: 2rem;
   border: 1px solid rgba(73, 97, 88, 0.1);
+  background: linear-gradient(180deg, #f7f0e4 0%, #f3ece2 100%);
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.75rem;
 }
 
-.stepsImageBand img {
+.stepsImageBandImg {
   display: block;
   width: 100%;
-  aspect-ratio: 21 / 7;
-  object-fit: cover;
-  object-position: center 30%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: center center;
+  border-radius: 16px;
 }
 
 /* === 15. Service Cards Grid === */
@@ -1095,8 +1102,9 @@ th {
     grid-template-columns: 1fr;
   }
 
-  .stepsImageBand img {
-    aspect-ratio: 16 / 7;
+  .stepsImageBand {
+    max-width: 100%;
+    padding: 0.6rem;
   }
 
   .serviceCardsGrid {
