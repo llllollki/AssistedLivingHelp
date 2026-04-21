@@ -4,49 +4,49 @@ import { launchMarkets } from "@/lib/markets";
 
 export default function MarketsPage() {
   return (
-    <section className="section">
-      <div className="container">
-        <p className="eyebrow">Markets</p>
-        <h1>Supported launch markets</h1>
-        <p className="sectionIntro">
-          Phase 1 is focused on five hospital-centered regions. Each market will use a vetted facility
-          subset and a concierge-style intake flow.
-        </p>
-        <div className="marketIntroBand">
-          <div className="marketIntroCopy">
-            <p className="softEyebrow">Thoughtful local coverage</p>
-            <h2>We launch narrowly so families get clearer guidance and more realistic next steps.</h2>
-            <p className="sectionSideCopy">
-              Every market starts with scoped coverage, vetted facilities, and a concierge workflow designed
-              to reduce noise during a stressful decision.
-            </p>
-          </div>
-          <article className="marketIntroImage">
+    <>
+      <div className="pageHero">
+        <div className="container">
+          <p className="eyebrow">Launch markets</p>
+          <h1>Guided support in select Southwest Riverside County markets.</h1>
+          <p className="sectionIntro">
+            Phase 1 is focused on five hospital-centered regions. Each market uses a vetted facility
+            subset and a concierge-style intake flow — not a broad, unfiltered directory.
+          </p>
+        </div>
+      </div>
+
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div style={{ borderRadius: "20px", overflow: "hidden", border: "1px solid rgba(73, 97, 88, 0.1)", marginBottom: "2.5rem" }}>
             <Image
               src="/images/markets-garden.png"
               alt="A garden bench in a quiet outdoor setting."
-              width={512}
-              height={512}
-              className="asideMediaImage"
+              width={1160}
+              height={390}
+              style={{ display: "block", width: "100%", aspectRatio: "3/1", objectFit: "cover" }}
             />
-          </article>
+          </div>
+
+          <div className="marketsGrid">
+            {launchMarkets.map((market) => (
+              <article key={market.slug} className="infoCard">
+                <p className="marketAnchor">{market.hospitalAnchor}</p>
+                <h2>{market.name}</h2>
+                <p>{market.summary}</p>
+                <ul className="tagList">
+                  {market.cities.map((city) => (
+                    <li key={city}>{city}</li>
+                  ))}
+                </ul>
+                <Link className="inlineTextLink" href={`/markets/${market.slug}`}>
+                  Open market page →
+                </Link>
+              </article>
+            ))}
+          </div>
         </div>
-        <div className="marketGrid refinedMarketGrid">
-          {launchMarkets.map((market) => (
-            <article key={market.slug} className="marketCard">
-              <p className="marketAnchor">{market.hospitalAnchor}</p>
-              <h2>{market.name}</h2>
-              <p>{market.summary}</p>
-              <ul className="tagList">
-                {market.cities.map((city) => (
-                  <li key={city}>{city}</li>
-                ))}
-              </ul>
-              <Link href={`/markets/${market.slug}`}>Open market page</Link>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
