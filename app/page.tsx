@@ -98,11 +98,11 @@ export default function HomePage() {
           </div>
           <div className="stepsImageBand">
             <Image
-              src="/images/process-walk.png"
-              alt="A caregiver walking beside an older adult in a bright community space."
+              src="/images/family-support.png"
+              alt="An older adult sitting with two children on a couch."
               width={1160}
-              height={387}
-              style={{ display: "block", width: "100%", aspectRatio: "21/7", objectFit: "cover", objectPosition: "center 30%" }}
+              height={560}
+              style={{ display: "block", width: "100%", aspectRatio: "16/8", objectFit: "cover", objectPosition: "center 18%" }}
             />
           </div>
         </div>
@@ -217,11 +217,11 @@ export default function HomePage() {
           </div>
           <div className="trustBandImage">
             <Image
-              src="/images/process-walk.png"
-              alt="A caregiver walking beside an older adult in a community space."
+              src="/images/family-support.png"
+              alt="An older adult sitting with two children on a couch."
               width={580}
-              height={435}
-              style={{ display: "block", width: "100%", aspectRatio: "4/3", objectFit: "cover" }}
+              height={580}
+              style={{ display: "block", width: "100%", aspectRatio: "1/1", objectFit: "cover", objectPosition: "center 12%" }}
             />
           </div>
         </div>
@@ -235,10 +235,6 @@ export default function HomePage() {
               <p className="softEyebrow">Launch markets</p>
               <h2>Intentionally local from day one.</h2>
             </div>
-            <p className="sectionSideCopy">
-              We are not presenting a statewide directory yet. Phase 1 is built around defined
-              hospital-centered markets and a vetted facility subset in those areas.
-            </p>
           </div>
           <div className="marketsGrid">
             {launchMarkets.map((market) => (
@@ -299,11 +295,11 @@ export default function HomePage() {
             </div>
             <div className="mosaicCell mosaicCellWideRight mosaicAspectLandscape">
               <Image
-                src="/images/process-walk.png"
-                alt="A caregiver walking beside an older adult in a community space."
+                src="/images/family-support.png"
+                alt="An older adult sitting with two children on a couch."
                 width={760}
-                height={428}
-                style={{ display: "block", width: "100%", height: "100%", objectFit: "cover" }}
+                height={532}
+                style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 14%" }}
               />
             </div>
           </div>
