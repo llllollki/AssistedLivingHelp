@@ -53,7 +53,7 @@ export default function HomePage() {
               width={768}
               height={768}
               priority
-              style={{ display: "block", width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 16%" }}
+              style={{ display: "block", width: "100%", height: "auto" }}
             />
             <div className="heroImageBadge">
               <strong>Guided concierge service</strong>
