@@ -47,13 +47,13 @@ export default function HomePage() {
 
           <div className="heroImageFrame">
             <Image
-              src="/images/hero-guidance.png"
-              alt="An older adult speaking with two care advisors in a bright living room."
+              src="/images/hero-care.png"
+              alt="A caregiver holding hands with an older adult in a warm, bright room."
               className="heroImageFrameImg"
-              width={862}
-              height={1076}
+              width={768}
+              height={768}
               priority
-              style={{ display: "block", width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center top" }}
+              style={{ display: "block", width: "100%", aspectRatio: "4/5", objectFit: "cover", objectPosition: "center 18%" }}
             />
             <div className="heroImageBadge">
               <strong>Guided concierge service</strong>
@@ -217,11 +217,11 @@ export default function HomePage() {
           </div>
           <div className="trustBandImage">
             <Image
-              src="/images/family-support.png"
-              alt="An older adult sitting with two children on a couch."
+              src="/images/trust-consult.png"
+              alt="An advisor speaking with an older adult and a family member in a living room."
               width={580}
-              height={580}
-              style={{ display: "block", width: "100%", aspectRatio: "1/1", objectFit: "cover", objectPosition: "center 12%" }}
+              height={768}
+              style={{ display: "block", width: "100%", aspectRatio: "1/1", objectFit: "cover", objectPosition: "center 22%" }}
             />
           </div>
         </div>
