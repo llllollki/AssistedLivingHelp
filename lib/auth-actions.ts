@@ -40,6 +40,8 @@ export async function loginAction(formData: FormData) {
 
 export async function signupAction(formData: FormData) {
   const supabase = await makeClient();
+  const firstName = ((formData.get("firstName") as string) ?? "").trim();
+  const lastName = ((formData.get("lastName") as string) ?? "").trim();
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -48,6 +50,7 @@ export async function signupAction(formData: FormData) {
     email,
     password,
     options: {
+      data: { first_name: firstName, last_name: lastName },
       emailRedirectTo: `${siteUrl}/auth/callback?next=/facilities`,
     },
   });

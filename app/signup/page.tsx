@@ -50,6 +50,28 @@ export default async function SignupPage({ searchParams }: Props) {
         {error && <p className="errorBanner">{error}</p>}
 
         <form className="authForm" action={signupAction}>
+          <div className="authFormRow">
+            <label>
+              First name
+              <input
+                type="text"
+                name="firstName"
+                required
+                autoComplete="given-name"
+                placeholder="Jane"
+              />
+            </label>
+            <label>
+              Last name
+              <input
+                type="text"
+                name="lastName"
+                required
+                autoComplete="family-name"
+                placeholder="Smith"
+              />
+            </label>
+          </div>
           <label>
             Email address
             <input type="email" name="email" required autoComplete="email" />
