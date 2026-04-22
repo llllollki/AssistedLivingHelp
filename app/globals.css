@@ -1536,3 +1536,273 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+/* === Admin CRM === */
+
+.adminPageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.adminPageHeader h1 {
+  margin: 0.25rem 0 0;
+}
+
+/* Status filter chips */
+.statusFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.statusFilter {
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  background: var(--surface);
+  text-decoration: none;
+  transition: border-color 0.12s, color 0.12s;
+}
+
+.statusFilter:hover {
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.statusFilter--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Status badges */
+.statusBadge {
+  display: inline-block;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.statusBadge--new            { background: #dbeafe; color: #1d4ed8; }
+.statusBadge--intake_in_progress { background: #ede9fe; color: #6d28d9; }
+.statusBadge--qualified      { background: #d1fae5; color: #065f46; }
+.statusBadge--assigned       { background: #e0f2fe; color: #0369a1; }
+.statusBadge--matching_in_progress { background: #fef3c7; color: #92400e; }
+.statusBadge--matched        { background: #bbf7d0; color: #14532d; }
+.statusBadge--closed_won     { background: #166534; color: #fff; }
+.statusBadge--closed_lost    { background: #fee2e2; color: #991b1b; }
+
+/* Partner status badges */
+.statusBadge--prospect        { background: #f1f5f9; color: #475569; }
+.statusBadge--contacted       { background: #dbeafe; color: #1d4ed8; }
+.statusBadge--interested      { background: #ede9fe; color: #6d28d9; }
+.statusBadge--meeting_scheduled { background: #e0f2fe; color: #0369a1; }
+.statusBadge--proposal_sent   { background: #fef3c7; color: #92400e; }
+.statusBadge--negotiating     { background: #ffedd5; color: #9a3412; }
+.statusBadge--won             { background: #d1fae5; color: #065f46; }
+.statusBadge--active          { background: #bbf7d0; color: #14532d; }
+.statusBadge--at_risk         { background: #fee2e2; color: #991b1b; }
+.statusBadge--churned         { background: #f1f5f9; color: #94a3b8; }
+
+/* Table enhancements */
+.tableRowLink {
+  font-weight: 600;
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+.tableRowLink:hover {
+  text-decoration: underline;
+}
+
+.tableSecondary {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Lead detail layout */
+.leadDetailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.adminCard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.adminCard h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+}
+
+.adminCard + .adminCard {
+  margin-top: 1.5rem;
+}
+
+.adminDl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1.25rem;
+  margin: 0;
+}
+
+.adminDl dt {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 0.1rem;
+  white-space: nowrap;
+}
+
+.adminDl dd {
+  margin: 0;
+  font-size: 0.93rem;
+  color: var(--ink);
+}
+
+/* Admin inline form controls */
+.adminInlineForm {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.adminInlineForm select,
+.adminInlineForm input,
+.adminInlineForm textarea {
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #fff;
+  color: var(--ink);
+  flex: 1;
+}
+
+.adminInlineForm textarea {
+  min-height: 72px;
+  resize: vertical;
+  width: 100%;
+}
+
+.adminSmallBtn {
+  padding: 0.45rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.12s;
+}
+
+.adminSmallBtn:hover {
+  background: var(--accent-dark);
+}
+
+.adminSmallBtn--ghost {
+  background: transparent;
+  color: var(--accent-dark);
+  border: 1px solid var(--line);
+}
+
+.adminSmallBtn--ghost:hover {
+  background: var(--surface-strong);
+}
+
+/* Interaction feed / timeline */
+.interactionFeed {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.interactionItem {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.interactionItem:last-child {
+  border-bottom: none;
+}
+
+.interactionMeta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.interactionType {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-dark);
+}
+
+.interactionDate {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.interactionAuthor {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.interactionBody {
+  font-size: 0.93rem;
+  color: var(--ink);
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* Admin form grid */
+.adminFormGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.adminFormGrid .fullWidth {
+  grid-column: 1 / -1;
+}
+
+/* Responsive */
+@media (max-width: 1040px) {
+  .leadDetailGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .adminFormGrid {
+    grid-template-columns: 1fr;
+  }
+}
