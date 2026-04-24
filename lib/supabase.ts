@@ -12,7 +12,20 @@ export function getSupabaseBrowserClient() {
   return createClient(supabaseUrl, supabaseAnonKey);
 }
 
-export function getSupabaseAdminClient() {
+export function getSupabasePublicClient() {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return null;
+  }
+
+  return createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  });
+}
+
+export function getSupabaseServiceRoleClient() {
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     return null;
   }

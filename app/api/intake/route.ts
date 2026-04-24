@@ -1,10 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdminClient } from "@/lib/supabase";
+import { getSupabasePublicClient, getSupabaseServiceRoleClient } from "@/lib/supabase";
 import { parseIntakeForm, validateIntakePayload } from "@/lib/validation";
-
-const CONSENT_TEXT_VERSION = "mvp-v1";
+import { checkIntakeRateLimit } from "@/lib/rate-limit";
+import {
+  sendIntakeConfirmationEmail,
+  sendIntakeConfirmationSms
+} from "@/lib/comms";
 
 export async function POST(request: NextRequest) {
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+
+  // Rate limit: 5 submissions per IP per 15-minute window.
+  const { limited } = await checkIntakeRateLimit(ip);
+  if (limited) {
+    const params = new URLSearchParams({
+      error:
+        "Too many submissions from your location. Please wait 15 minutes and try again, or call us directly."
+    });
+    return NextResponse.redirect(new URL(`/get-help?${params.toString()}`, request.url));
+  }
+
   const formData = await request.formData();
   const payload = parseIntakeForm(formData);
   const errors = validateIntakePayload(payload);
@@ -14,115 +30,128 @@ export async function POST(request: NextRequest) {
     return NextResponse.redirect(new URL(`/get-help?${params.toString()}`, request.url));
   }
 
-  const supabase = getSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) {
     const params = new URLSearchParams({ error: "Supabase is not configured yet." });
     return NextResponse.redirect(new URL(`/get-help?${params.toString()}`, request.url));
   }
 
-  const { data: market, error: marketError } = await supabase
-    .from("launch_markets")
-    .select("id, slug")
-    .eq("slug", payload.launchMarketSlug)
-    .single();
+  const userAgent = request.headers.get("user-agent");
 
-  if (marketError || !market) {
-    const params = new URLSearchParams({ error: "Selected market could not be found." });
-    return NextResponse.redirect(new URL(`/get-help?${params.toString()}`, request.url));
-  }
-
-  const leadInsert = {
-    launch_market_id: market.id,
-    first_name: payload.firstName,
-    last_name: payload.lastName,
-    email: payload.email || null,
-    phone: payload.phone || null,
-    preferred_contact_method: payload.preferredContactMethod || null,
-    relationship_to_resident: payload.relationshipToResident,
-    desired_city: payload.desiredCity || null,
-    move_in_timeframe: payload.moveInTimeframe,
-    general_care_category: payload.generalCareCategory,
-    budget_min: payload.budgetMin ? Number(payload.budgetMin) : null,
-    budget_max: payload.budgetMax ? Number(payload.budgetMax) : null,
-    wants_scheduling_help: payload.wantsSchedulingHelp,
-    attribution_channel: request.nextUrl.searchParams.get("utm_source") ?? "website",
-    attribution_campaign: request.nextUrl.searchParams.get("utm_campaign"),
-    attribution_ad_set: request.nextUrl.searchParams.get("utm_adset"),
-    attribution_ad: request.nextUrl.searchParams.get("utm_ad"),
-    landing_page_variant: request.nextUrl.searchParams.get("variant")
-  };
-
-  const { data: lead, error: leadError } = await supabase
-    .from("leads")
-    .insert(leadInsert)
-    .select("id")
-    .single();
-
-  if (leadError || !lead) {
-    const params = new URLSearchParams({ error: "Lead could not be created." });
-    return NextResponse.redirect(new URL(`/get-help?${params.toString()}`, request.url));
-  }
-
-  const consentRows = [
-    {
-      lead_id: lead.id,
-      consent_type: "contact_support",
-      channel: "all",
-      consent_state: payload.consentContactSupport ? "granted" : "denied",
-      consent_text_version: CONSENT_TEXT_VERSION,
-      sharing_scope: "matching_and_scheduling_support",
-      granted_at: payload.consentContactSupport ? new Date().toISOString() : null,
-      source_page: "/get-help",
-      ip_address: request.headers.get("x-forwarded-for"),
-      user_agent: request.headers.get("user-agent")
+  const { data, error } = await supabase.rpc("submit_public_intake", {
+    p_payload: {
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      email: payload.email || null,
+      phone: payload.phone || null,
+      preferredContactMethod: payload.preferredContactMethod || null,
+      relationshipToResident: payload.relationshipToResident,
+      launchMarketSlug: payload.launchMarketSlug,
+      desiredCity: payload.desiredCity || null,
+      moveInTimeframe: payload.moveInTimeframe,
+      generalCareCategory: payload.generalCareCategory,
+      budgetMin: payload.budgetMin ? Number(payload.budgetMin) : null,
+      budgetMax: payload.budgetMax ? Number(payload.budgetMax) : null,
+      wantsSchedulingHelp: payload.wantsSchedulingHelp,
+      consentPrivacyAcknowledgment: payload.consentPrivacyAcknowledgment,
+      consentContactSupport: payload.consentContactSupport,
+      consentEmail: payload.consentEmail,
+      consentSms: payload.consentSms,
+      consentPhone: payload.consentPhone,
+      consentFacilitySharing: payload.consentFacilitySharing,
+      attributionChannel: request.nextUrl.searchParams.get("utm_source") ?? "website",
+      attributionCampaign: request.nextUrl.searchParams.get("utm_campaign"),
+      attributionAdSet: request.nextUrl.searchParams.get("utm_adset"),
+      attributionAd: request.nextUrl.searchParams.get("utm_ad"),
+      landingPageVariant: request.nextUrl.searchParams.get("variant")
     },
-    {
-      lead_id: lead.id,
-      consent_type: "email",
-      channel: "email",
-      consent_state: payload.consentEmail ? "granted" : "not_granted",
-      consent_text_version: CONSENT_TEXT_VERSION,
-      sharing_scope: "direct_updates",
-      granted_at: payload.consentEmail ? new Date().toISOString() : null,
-      source_page: "/get-help",
-      ip_address: request.headers.get("x-forwarded-for"),
-      user_agent: request.headers.get("user-agent")
-    },
-    {
-      lead_id: lead.id,
-      consent_type: "sms",
-      channel: "sms",
-      consent_state: payload.consentSms ? "granted" : "not_granted",
-      consent_text_version: CONSENT_TEXT_VERSION,
-      sharing_scope: "direct_updates",
-      granted_at: payload.consentSms ? new Date().toISOString() : null,
-      source_page: "/get-help",
-      ip_address: request.headers.get("x-forwarded-for"),
-      user_agent: request.headers.get("user-agent")
-    },
-    {
-      lead_id: lead.id,
-      consent_type: "phone_call",
-      channel: "phone",
-      consent_state: payload.consentPhone ? "granted" : "not_granted",
-      consent_text_version: CONSENT_TEXT_VERSION,
-      sharing_scope: "direct_updates",
-      granted_at: payload.consentPhone ? new Date().toISOString() : null,
-      source_page: "/get-help",
-      ip_address: request.headers.get("x-forwarded-for"),
-      user_agent: request.headers.get("user-agent")
-    }
-  ];
-
-  await supabase.from("consents").insert(consentRows);
-
-  await supabase.from("alh_interactions").insert({
-    lead_id: lead.id,
-    interaction_type: "status_change",
-    outcome: "Lead created from intake flow",
-    body_summary: "Initial intake submitted through public website."
+    p_ip_address: ip,
+    p_user_agent: userAgent
   });
 
-  const params = new URLSearchParams({ lead: lead.id, market: market.slug });
-  return NextResponse.redirect(new URL(`/confirmation?${params.toString()}`, request.url));
+  if (error || !data || data.length === 0) {
+    const params = new URLSearchParams({
+      error: "We could not save your intake. Please try again or call us directly."
+    });
+    return NextResponse.redirect(new URL(`/get-help?${params.toString()}`, request.url));
+  }
+
+  const result = data[0] as { lead_id: string; market_slug: string };
+
+  // Send confirmations. Must complete before the function returns so the
+  // serverless runtime doesn't terminate the work mid-flight. Intake
+  // success does not depend on send success — all errors are swallowed
+  // and logged to outbound_comms.
+  await sendConfirmations(result.lead_id);
+
+  const params = new URLSearchParams({
+    lead: result.lead_id,
+    market: result.market_slug
+  });
+  return NextResponse.redirect(
+    new URL(`/confirmation?${params.toString()}`, request.url)
+  );
+}
+
+async function sendConfirmations(leadId: string) {
+  const supabase = getSupabaseServiceRoleClient();
+  if (!supabase) return;
+
+  const [{ data: lead }, { data: consents }] = await Promise.all([
+    supabase
+      .from("leads")
+      .select("first_name, email, phone")
+      .eq("id", leadId)
+      .single(),
+    supabase
+      .from("consents")
+      .select("consent_type, channel, consent_state, consent_source, consent_basis, consent_text_version")
+      .eq("lead_id", leadId)
+  ]);
+
+  if (!lead) return;
+
+  const emailConsent = consents?.find(
+    (c) => c.consent_type === "email" && c.channel === "email"
+  );
+  const smsConsent = consents?.find(
+    (c) => c.consent_type === "sms" && c.channel === "sms"
+  );
+
+  const baseConsent = {
+    consentSource:
+      emailConsent?.consent_source ?? smsConsent?.consent_source ?? null,
+    consentBasis:
+      emailConsent?.consent_basis ?? smsConsent?.consent_basis ?? null,
+    consentVersion:
+      emailConsent?.consent_text_version ??
+      smsConsent?.consent_text_version ??
+      null
+  };
+
+  const sends: Promise<void>[] = [];
+
+  if (lead.email && emailConsent?.consent_state === "granted") {
+    sends.push(
+      sendIntakeConfirmationEmail({
+        leadId,
+        email: lead.email,
+        firstName: lead.first_name,
+        ...baseConsent
+      })
+    );
+  }
+
+  if (lead.phone && smsConsent?.consent_state === "granted") {
+    sends.push(
+      sendIntakeConfirmationSms({
+        leadId,
+        phone: lead.phone,
+        firstName: lead.first_name,
+        ...baseConsent
+      })
+    );
+  }
+
+  await Promise.allSettled(sends);
 }

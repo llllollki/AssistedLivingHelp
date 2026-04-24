@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:assistedliving-help.vercel.app)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(npm run *)",
+      "Bash(npx tsc *)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs;C:\\\\Users\\\\noela\\\\AppData\\\\Roaming\\\\npm\"; cd c:\\\\Projects\\\\AssistedLivingHelp; npx tsc --noEmit 2>&1 | Select-Object -First 50)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs\"; cd c:\\\\Projects\\\\AssistedLivingHelp; node \"C:\\\\Program Files\\\\nodejs\\\\node_modules\\\\typescript\\\\bin\\\\tsc\" --noEmit 2>&1 | Select-Object -First 40)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs\"; cd c:\\\\Projects\\\\AssistedLivingHelp; node \".\\\\node_modules\\\\typescript\\\\bin\\\\tsc\" --noEmit 2>&1 | Select-Object -First 40)",
+      "Bash(gh run *)",
+      "Bash(gh api *)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\GitHub CLI;C:\\\\Users\\\\noela\\\\AppData\\\\Local\\\\Programs\\\\GitHub CLI\"; gh api \"repos/llllollki/AssistedLivingHelp/commits/9b46ec6/check-runs\" 2>&1 | Select-String -Pattern \"name|status|conclusion\" | Select-Object -First 20)",
+      "WebFetch(domain:api.vercel.com)",
+      "WebFetch(domain:api.github.com)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs;C:\\\\Users\\\\noela\\\\AppData\\\\Roaming\\\\npm;C:\\\\Users\\\\noela\\\\AppData\\\\Local\\\\Programs\\\\vercel\"; cd c:\\\\Projects\\\\AssistedLivingHelp; where.exe vercel 2>&1; where.exe node 2>&1)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs\"; cd c:\\\\Projects\\\\AssistedLivingHelp; node \".\\\\node_modules\\\\.bin\\\\vercel\" --version 2>&1; node \"C:\\\\Users\\\\noela\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\vercel\\\\dist\\\\index.js\" --version 2>&1)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs\"; cd c:\\\\Projects\\\\AssistedLivingHelp; node \".\\\\node_modules\\\\next\\\\dist\\\\bin\\\\next\" build 2>&1 | Select-Object -Last 40)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs\"; Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; cd c:\\\\Projects\\\\AssistedLivingHelp; node \"C:\\\\Program Files\\\\nodejs\\\\node_modules\\\\npm\\\\bin\\\\npm-cli.js\" install -g vercel 2>&1 | Select-Object -Last 10)",
+      "PowerShell(Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; $env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs;C:\\\\Users\\\\noela\\\\AppData\\\\Roaming\\\\npm\"; cd c:\\\\Projects\\\\AssistedLivingHelp; vercel --prod --yes 2>&1 | Select-Object -Last 20)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Users\\\\noela\\\\AppData\\\\Roaming\\\\npm\"; Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; vercel login 2>&1 | Select-Object -First 5)",
+      "PowerShell($env:PATH = $env:PATH + \";C:\\\\Program Files\\\\nodejs\"; Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; cd c:\\\\Projects\\\\AssistedLivingHelp; node \"C:\\\\Users\\\\noela\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\vercel\\\\dist\\\\vc.js\" --prod --yes 2>&1 | Select-Object -Last 15)"
+    ]
+  }
+}

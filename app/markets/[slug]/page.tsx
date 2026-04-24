@@ -50,8 +50,8 @@ export default async function MarketPage({ params }: MarketPageProps) {
               src="/images/process-walk.png"
               alt="A caregiver walking beside an older adult in a bright community space."
               width={760}
-              height={285}
-              style={{ display: "block", width: "100%", aspectRatio: "8/3", objectFit: "cover", objectPosition: "center 30%" }}
+              height={380}
+              style={{ display: "block", width: "100%", aspectRatio: "2/1", objectFit: "cover", objectPosition: "center top" }}
             />
           </div>
 

@@ -853,6 +853,20 @@ th {
   gap: 1rem;
 }
 
+.inlineCheckbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+.inlineCheckbox input[type="checkbox"] {
+  width: auto;
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
 .checkboxRow label,
 .fullWidth > input[type="checkbox"] {
   display: flex;
@@ -1611,6 +1625,24 @@ th {
 .statusBadge--active          { background: #bbf7d0; color: #14532d; }
 .statusBadge--at_risk         { background: #fee2e2; color: #991b1b; }
 .statusBadge--churned         { background: #f1f5f9; color: #94a3b8; }
+
+/* Match status badges */
+.statusBadge--suggested       { background: #dbeafe; color: #1d4ed8; }
+.statusBadge--reviewed        { background: #ede9fe; color: #6d28d9; }
+.statusBadge--shared          { background: #bbf7d0; color: #14532d; }
+.statusBadge--suppressed      { background: #f1f5f9; color: #94a3b8; }
+.statusBadge--declined        { background: #fee2e2; color: #991b1b; }
+
+/* Appointment status badges */
+.statusBadge--not_started         { background: #f1f5f9; color: #475569; }
+.statusBadge--requested           { background: #dbeafe; color: #1d4ed8; }
+.statusBadge--options_received    { background: #ede9fe; color: #6d28d9; }
+.statusBadge--proposed_to_family  { background: #e0f2fe; color: #0369a1; }
+.statusBadge--confirmed           { background: #bbf7d0; color: #14532d; }
+.statusBadge--reschedule_requested { background: #fef3c7; color: #92400e; }
+.statusBadge--cancelled           { background: #fee2e2; color: #991b1b; }
+.statusBadge--completed           { background: #166534; color: #fff; }
+.statusBadge--no_show             { background: #f1f5f9; color: #94a3b8; }
 
 /* Table enhancements */
 .tableRowLink {

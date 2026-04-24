@@ -132,10 +132,8 @@ export default async function AdminFacilitiesPage({
                   <tr key={f.id}>
                     <td>
                       <Link
-                        href={`/facilities/${f.id}`}
+                        href={`/admin/facilities/${f.id}`}
                         className="tableRowLink"
-                        target="_blank"
-                        rel="noopener noreferrer"
                       >
                         {toTitleCase(f.name)}
                       </Link>

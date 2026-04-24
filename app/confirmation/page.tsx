@@ -6,42 +6,53 @@ type ConfirmationPageProps = {
 
 export default async function ConfirmationPage({ searchParams }: ConfirmationPageProps) {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const leadId = resolvedSearchParams?.lead;
 
   return (
     <section className="section">
       <div className="container narrow">
         <div className="confirmationHero">
-          <div className="confirmationCheck">✓</div>
+          <div className="confirmationCheck">OK</div>
           <h1>Your request has been received.</h1>
           <p className="sectionIntro">
-            Assisted Living Help will use the details you shared to identify likely-fit facilities
-            and coordinate next steps. You'll hear from us via your preferred contact method.
+            Your intake is now in staff triage. We recorded the permissions you selected, and no
+            facility will be contacted unless sharing consent is on file.
           </p>
         </div>
 
         <div className="infoCard" style={{ marginBottom: "1.25rem" }}>
-          <h2>Expected next actions</h2>
+          <h2>What we logged</h2>
           <ul className="checkList">
-            <li>Lead record created or updated in our system</li>
-            <li>Consent and attribution logged</li>
-            <li>Initial matches generated for staff review</li>
-            <li>Follow-up queued for outreach or scheduling support</li>
+            <li>Your lead record and attribution details</li>
+            <li>Your consent and channel-permission choices</li>
+            <li>A staff triage task with a next-step due time</li>
+            <li>Optional automated facility suggestions for staff review only</li>
           </ul>
         </div>
 
-        <div className="infoCard">
+        <div className="infoCard" style={{ marginBottom: "1.25rem" }}>
           <h2>What to expect next</h2>
           <p>
-            Our team will review your intake, identify likely-fit facilities in your market, and
-            follow up within 1 business day. We will confirm the approach via your preferred
-            contact method before sharing your details with any facility.
+            A staff member will review your intake and follow up within 1 business day using the
+            channels you allowed. If you opted in to email or SMS, a confirmation may arrive
+            shortly. Email and SMS outreach are manual right now, and we do not claim live
+            availability or automatic placement.
           </p>
         </div>
 
-        {resolvedSearchParams?.lead ? (
-          <p className="confirmationMeta">
-            Reference ID: <strong>{resolvedSearchParams.lead}</strong>
-          </p>
+        {leadId ? (
+          <div className="infoCard" style={{ marginBottom: "1.25rem" }}>
+            <h2>Track your request</h2>
+            <p style={{ marginBottom: "0.75rem" }}>
+              You can check the status of your request at any time using your reference ID.
+            </p>
+            <p className="confirmationMeta" style={{ marginBottom: "0.75rem" }}>
+              Reference ID: <strong>{leadId}</strong>
+            </p>
+            <Link className="secondaryButton" href={`/status?lead=${leadId}`}>
+              Check request status
+            </Link>
+          </div>
         ) : null}
 
         <div className="heroActions" style={{ marginTop: "2rem" }}>

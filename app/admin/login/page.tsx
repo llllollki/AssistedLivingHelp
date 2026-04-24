@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { getActiveStaffUser } from "@/lib/supabase-server";
 import { adminLoginAction } from "@/lib/auth-actions";
 
 type Props = {
@@ -9,19 +9,10 @@ type Props = {
 export default async function AdminLoginPage({ searchParams }: Props) {
   const params = searchParams ? await searchParams : {};
 
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user, staffUser } = await getActiveStaffUser();
 
-  if (user) {
-    const { data: staffUser } = await supabase
-      .from("staff_users")
-      .select("id")
-      .eq("id", user.id)
-      .eq("is_active", true)
-      .single();
-    if (staffUser) redirect("/admin");
+  if (user && staffUser) {
+    redirect("/admin");
   }
 
   const error = params.error;

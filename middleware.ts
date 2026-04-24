@@ -33,11 +33,25 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Admin routes: session required; staff membership is verified in the admin layout.
+  // Admin routes: require an active staff membership before rendering.
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
     if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = "/admin/login";
+      return NextResponse.redirect(url);
+    }
+
+    const { data: staffUser } = await supabase
+      .from("staff_users")
+      .select("id")
+      .eq("id", user.id)
+      .eq("is_active", true)
+      .maybeSingle();
+
+    if (!staffUser) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/login";
+      url.searchParams.set("error", "Access denied");
       return NextResponse.redirect(url);
     }
   }

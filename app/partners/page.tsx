@@ -9,9 +9,9 @@ export default function PartnersPage() {
           <p className="eyebrow">For facilities</p>
           <h1>Partner with Assisted Living Help.</h1>
           <p className="sectionIntro">
-            The MVP includes a provider partnership workflow for communities that want stronger local
-            visibility and operational support around calls and tours in the SW Riverside County
-            launch markets.
+            The MVP includes a conservative partnership workflow for communities that want
+            stronger local visibility and support around calls and tours in the SW Riverside
+            County launch markets.
           </p>
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function PartnersPage() {
                 We help families who are actively looking for care in your area. Instead of cold
                 directory traffic, we qualify families, understand their needs, and help coordinate
                 the next step. Our goal is to connect your community with better-fit families and
-                move them toward scheduled calls and tours faster.
+                support manual coordination where it makes sense.
               </p>
               <div className="heroActions">
                 <Link className="primaryButton" href="/get-help">

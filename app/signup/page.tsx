@@ -43,8 +43,8 @@ export default async function SignupPage({ searchParams }: Props) {
         <p className="eyebrow">Family account</p>
         <h1>Create account</h1>
         <p className="authSubtext">
-          Create a free account to browse our vetted facility directory and
-          track your inquiry.
+          Create a free account to browse our vetted facility subset after you
+          sign in. Concierge follow-up still happens through our staff workflow.
         </p>
 
         {error && <p className="errorBanner">{error}</p>}

@@ -26,7 +26,7 @@ export default async function LoginPage({ searchParams }: Props) {
         <p className="eyebrow">Family account</p>
         <h1>Sign in</h1>
         <p className="authSubtext">
-          Sign in to browse assisted living facilities and track your inquiry.
+          Sign in to browse our vetted facility subset for supported markets.
         </p>
 
         {error && <p className="errorBanner">{error}</p>}

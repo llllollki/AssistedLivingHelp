@@ -12,10 +12,12 @@ export type IntakePayload = {
   budgetMin: string;
   budgetMax: string;
   wantsSchedulingHelp: boolean;
+  consentPrivacyAcknowledgment: boolean;
   consentEmail: boolean;
   consentSms: boolean;
   consentPhone: boolean;
   consentContactSupport: boolean;
+  consentFacilitySharing: boolean;
 };
 
 export function parseIntakeForm(formData: FormData): IntakePayload {
@@ -33,10 +35,13 @@ export function parseIntakeForm(formData: FormData): IntakePayload {
     budgetMin: String(formData.get("budgetMin") ?? "").trim(),
     budgetMax: String(formData.get("budgetMax") ?? "").trim(),
     wantsSchedulingHelp: formData.get("wantsSchedulingHelp") === "on",
+    consentPrivacyAcknowledgment:
+      formData.get("consentPrivacyAcknowledgment") === "on",
     consentEmail: formData.get("consentEmail") === "on",
     consentSms: formData.get("consentSms") === "on",
     consentPhone: formData.get("consentPhone") === "on",
-    consentContactSupport: formData.get("consentContactSupport") === "on"
+    consentContactSupport: formData.get("consentContactSupport") === "on",
+    consentFacilitySharing: formData.get("consentFacilitySharing") === "on"
   };
 }
 
@@ -50,6 +55,9 @@ export function validateIntakePayload(payload: IntakePayload): string[] {
   if (!payload.launchMarketSlug) errors.push("Launch market is required.");
   if (!payload.moveInTimeframe) errors.push("Move-in timeframe is required.");
   if (!payload.generalCareCategory) errors.push("General care category is required.");
+  if (!payload.consentPrivacyAcknowledgment) {
+    errors.push("Privacy notice acknowledgment is required.");
+  }
   if (!payload.consentContactSupport) errors.push("Consent to contact for matching and scheduling support is required.");
 
   return errors;

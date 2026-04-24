@@ -4,30 +4,25 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function FacilityProfilePage({
-  params,
+  params
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const supabase = await createSupabaseServerClient();
 
-  const { data: f, error } = await supabase
+  const { data: facility, error } = await supabase
     .from("alh_facilities")
-    .select(
-      "id, name, address, city, state, zip, county, care_category, capacity, phone, license_status"
-    )
+    .select("id, name, address, city, state, zip, county, care_category, capacity, phone, license_status")
     .eq("id", id)
     .eq("public_visibility", true)
     .single();
 
-  if (!f || error) notFound();
+  if (!facility || error) {
+    notFound();
+  }
 
-  const locationLine = [
-    f.address,
-    f.city ? toTitleCase(f.city) : null,
-    f.state,
-    f.zip,
-  ]
+  const locationLine = [facility.address, facility.city ? toTitleCase(facility.city) : null, facility.state, facility.zip]
     .filter(Boolean)
     .join(", ");
 
@@ -36,12 +31,12 @@ export default async function FacilityProfilePage({
       <div className="pageHero">
         <div className="container">
           <Link href="/facilities" className="backLink">
-            ← Back to facilities
+            {"<- "}Back to facilities
           </Link>
           <p className="eyebrow" style={{ marginTop: "1.25rem" }}>
             Facility profile
           </p>
-          <h1>{toTitleCase(f.name)}</h1>
+          <h1>{toTitleCase(facility.name)}</h1>
           {locationLine && <p className="sectionIntro">{locationLine}</p>}
         </div>
       </div>
@@ -52,54 +47,54 @@ export default async function FacilityProfilePage({
             <div className="facilityProfileCard">
               <h2>Facility details</h2>
               <dl className="facilityDl">
-                {f.city && (
+                {facility.city && (
                   <>
                     <dt>City</dt>
-                    <dd>{toTitleCase(f.city)}</dd>
+                    <dd>{toTitleCase(facility.city)}</dd>
                   </>
                 )}
-                {f.county && (
+                {facility.county && (
                   <>
                     <dt>County</dt>
-                    <dd>{toTitleCase(f.county)}</dd>
+                    <dd>{toTitleCase(facility.county)}</dd>
                   </>
                 )}
-                {f.zip && (
+                {facility.zip && (
                   <>
                     <dt>ZIP code</dt>
-                    <dd>{f.zip}</dd>
+                    <dd>{facility.zip}</dd>
                   </>
                 )}
-                {f.state && (
+                {facility.state && (
                   <>
                     <dt>State</dt>
-                    <dd>{f.state}</dd>
+                    <dd>{facility.state}</dd>
                   </>
                 )}
-                {f.care_category && (
+                {facility.care_category && (
                   <>
                     <dt>Care type</dt>
-                    <dd>{toTitleCase(f.care_category)}</dd>
+                    <dd>{toTitleCase(facility.care_category)}</dd>
                   </>
                 )}
-                {f.capacity != null && (
+                {facility.capacity != null && (
                   <>
                     <dt>Capacity</dt>
-                    <dd>{f.capacity} beds</dd>
+                    <dd>{facility.capacity} beds</dd>
                   </>
                 )}
-                {f.license_status && (
+                {facility.license_status && (
                   <>
                     <dt>License status</dt>
-                    <dd>{toTitleCase(f.license_status)}</dd>
+                    <dd>{toTitleCase(facility.license_status)}</dd>
                   </>
                 )}
-                {f.phone && (
+                {facility.phone && (
                   <>
                     <dt>Phone</dt>
                     <dd>
-                      <a href={`tel:${f.phone}`} className="facilityCardPhone">
-                        {f.phone}
+                      <a href={`tel:${facility.phone}`} className="facilityCardPhone">
+                        {facility.phone}
                       </a>
                     </dd>
                   </>
@@ -110,16 +105,14 @@ export default async function FacilityProfilePage({
             <div className="facilitiesCta">
               <h2>Need help finding the right fit?</h2>
               <p>
-                Our team reviews your care needs, budget, and location
-                preferences to build a personalized shortlist and help schedule
-                calls or tours. The service is free for families.
+                Our staff can review your care needs, budget, and location preferences before
+                suggesting next steps or coordinating calls or tours. The service is free for
+                families.
               </p>
               <Link href="/get-help" className="primaryButton">
-                Get matched — it&apos;s free
+                Start an intake
               </Link>
-              <p className="ctaSubtext">
-                Questions? We&apos;re happy to help over the phone.
-              </p>
+              <p className="ctaSubtext">Any outreach by email or SMS is handled manually right now.</p>
             </div>
           </div>
         </div>
@@ -127,9 +120,7 @@ export default async function FacilityProfilePage({
 
       <div className="facilitiesHelpBand">
         <div className="container">
-          <p className="facilitiesHelpText">
-            Compare this facility with others in the same market.
-          </p>
+          <p className="facilitiesHelpText">Compare this facility with others in the same market.</p>
           <Link href="/facilities" className="primaryButton">
             Browse all facilities
           </Link>

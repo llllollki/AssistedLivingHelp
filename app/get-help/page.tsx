@@ -16,8 +16,8 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
           <p className="eyebrow">Family intake</p>
           <h1>Tell us what kind of help you need.</h1>
           <p className="sectionIntro">
-            A short intake — just the essentials. We collect the minimum details needed to start
-            matching and follow up with you right away.
+            A short intake with the minimum details we need to start staff triage. We log your
+            permissions separately so outreach and facility sharing stay explicit.
           </p>
         </div>
       </div>
@@ -46,7 +46,9 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
               <label>
                 Preferred contact method
                 <select name="preferredContactMethod" defaultValue="">
-                  <option value="" disabled>Select one</option>
+                  <option value="" disabled>
+                    Select one
+                  </option>
                   <option>Email</option>
                   <option>SMS</option>
                   <option>Phone call</option>
@@ -55,7 +57,9 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
               <label>
                 Relationship to resident
                 <select name="relationshipToResident" defaultValue="">
-                  <option value="" disabled>Select one</option>
+                  <option value="" disabled>
+                    Select one
+                  </option>
                   <option>Self</option>
                   <option>Adult child</option>
                   <option>Spouse</option>
@@ -70,7 +74,9 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
               <label>
                 Launch market
                 <select name="launchMarketSlug" defaultValue="">
-                  <option value="" disabled>Select a market</option>
+                  <option value="" disabled>
+                    Select a market
+                  </option>
                   {launchMarkets.map((market) => (
                     <option key={market.slug} value={market.slug}>
                       {market.name}
@@ -81,7 +87,9 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
               <label>
                 Move-in timeframe
                 <select name="moveInTimeframe" defaultValue="">
-                  <option value="" disabled>Select timing</option>
+                  <option value="" disabled>
+                    Select timing
+                  </option>
                   <option>Immediately</option>
                   <option>Within 30 days</option>
                   <option>Within 60 days</option>
@@ -91,7 +99,9 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
               <label>
                 General care category
                 <select name="generalCareCategory" defaultValue="">
-                  <option value="" disabled>Select one</option>
+                  <option value="" disabled>
+                    Select one
+                  </option>
                   <option>Assisted living</option>
                   <option>Memory care</option>
                   <option>Unsure</option>
@@ -105,28 +115,38 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
                 Budget maximum
                 <input type="number" name="budgetMax" min="0" step="100" placeholder="7000" />
               </label>
-              <label className="fullWidth">
+              <label className="fullWidth inlineCheckbox">
                 <input type="checkbox" name="wantsSchedulingHelp" /> I want help scheduling calls
                 or tours.
               </label>
-              <label className="fullWidth">
-                Communication preferences
-                <div className="checkboxRow">
-                  <label>
-                    <input type="checkbox" name="consentEmail" /> Email updates
-                  </label>
-                  <label>
-                    <input type="checkbox" name="consentSms" /> SMS updates
-                  </label>
-                  <label>
-                    <input type="checkbox" name="consentPhone" /> Phone call follow-up
-                  </label>
-                </div>
+              <label className="fullWidth consentBox inlineCheckbox">
+                <input type="checkbox" name="consentPrivacyAcknowledgment" />
+                I have reviewed the privacy notice and understand Assisted Living Help will use my
+                information to review this request.
               </label>
-              <label className="fullWidth consentBox">
+              <label className="fullWidth consentBox inlineCheckbox">
                 <input type="checkbox" name="consentContactSupport" />
                 I agree that Assisted Living Help may contact me about matching and scheduling
                 support.
+              </label>
+              <label className="fullWidth">
+                Channel permissions
+                <div className="checkboxRow">
+                  <label>
+                    <input type="checkbox" name="consentEmail" /> Email follow-up allowed
+                  </label>
+                  <label>
+                    <input type="checkbox" name="consentSms" /> SMS follow-up allowed
+                  </label>
+                  <label>
+                    <input type="checkbox" name="consentPhone" /> Phone call follow-up allowed
+                  </label>
+                </div>
+              </label>
+              <label className="fullWidth consentBox inlineCheckbox">
+                <input type="checkbox" name="consentFacilitySharing" />
+                I agree that Assisted Living Help may share my information with facilities only to
+                coordinate next steps for this request.
               </label>
               <div className="fullWidth formActions">
                 <button className="primaryButton" type="submit">
@@ -134,8 +154,8 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
                 </button>
               </div>
               <p className="heroMicrocopy fullWidth" style={{ marginTop: 0 }}>
-                We do not share your details with facilities until we have reviewed your intake and
-                confirmed the next step with you.
+                Email and SMS follow-up are manual for now. We do not claim live availability, and
+                we do not share your details with facilities unless you gave sharing permission.
               </p>
             </form>
           </div>
@@ -153,10 +173,10 @@ export default async function GetHelpPage({ searchParams }: GetHelpPageProps) {
             <div className="infoCard">
               <h2>What happens next</h2>
               <ul className="checkList">
-                <li>Your intake is logged for the internal care team.</li>
-                <li>Matching rules and staff create a shortlist from the Phase 1 facility subset.</li>
-                <li>We follow up via your preferred contact method within 1 business day.</li>
-                <li>Scheduling support begins once you confirm the approach.</li>
+                <li>Your intake creates a real staff triage task.</li>
+                <li>Staff review your details and any automated suggestions before outreach.</li>
+                <li>We follow up manually within 1 business day using the channels you allowed.</li>
+                <li>No facility receives your details unless sharing consent is on file.</li>
               </ul>
             </div>
           </aside>

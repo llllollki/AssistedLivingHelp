@@ -10,7 +10,7 @@ type SearchParams = Promise<{
 }>;
 
 export default async function FacilitiesPage({
-  searchParams,
+  searchParams
 }: {
   searchParams: SearchParams;
 }) {
@@ -19,9 +19,7 @@ export default async function FacilitiesPage({
 
   let query = supabase
     .from("alh_facilities")
-    .select(
-      "id, name, city, state, zip, county, care_category, capacity, phone, license_status"
-    )
+    .select("id, name, city, state, zip, county, care_category, capacity, phone, license_status")
     .eq("public_visibility", true)
     .order("name");
 
@@ -29,8 +27,7 @@ export default async function FacilitiesPage({
   if (params.zip) query = query.eq("zip", params.zip);
   if (params.q) query = query.ilike("name", `%${params.q}%`);
   if (params.size === "small") query = query.lte("capacity", 15);
-  else if (params.size === "medium")
-    query = query.gte("capacity", 16).lte("capacity", 50);
+  else if (params.size === "medium") query = query.gte("capacity", 16).lte("capacity", 50);
   else if (params.size === "large") query = query.gte("capacity", 51);
 
   const { data: rawFacilities, error } = await query;
@@ -40,27 +37,15 @@ export default async function FacilitiesPage({
     .select("city, zip")
     .eq("public_visibility", true);
 
-  const cities = [
-    ...new Set(
-      (allFacilities ?? [])
-        .map((f) => f.city)
-        .filter(Boolean)
-        .sort()
-    ),
-  ];
-  const zips = [
-    ...new Set(
-      (allFacilities ?? [])
-        .map((f) => f.zip)
-        .filter(Boolean)
-        .sort()
-    ),
-  ];
+  const cities = [...new Set((allFacilities ?? []).map((facility) => facility.city).filter(Boolean).sort())];
+  const zips = [...new Set((allFacilities ?? []).map((facility) => facility.zip).filter(Boolean).sort())];
 
   const seen = new Set<string>();
-  const facilities = (rawFacilities ?? []).filter((f) => {
-    const key = `${f.name}|${f.city}|${f.zip}`;
-    if (seen.has(key)) return false;
+  const facilities = (rawFacilities ?? []).filter((facility) => {
+    const key = `${facility.name}|${facility.city}|${facility.zip}`;
+    if (seen.has(key)) {
+      return false;
+    }
     seen.add(key);
     return true;
   });
@@ -74,9 +59,9 @@ export default async function FacilitiesPage({
           <p className="eyebrow">Facility search</p>
           <h1>Browse assisted living facilities.</h1>
           <p className="sectionIntro">
-            Vetted facilities in our supported Southwest Riverside County
-            markets. Submit an intake to get a personalized shortlist and
-            scheduling help.
+            Vetted facilities in our supported Southwest Riverside County markets. This is a
+            research view for signed-in families, while our concierge workflow still starts with
+            intake and staff review.
           </p>
         </div>
       </div>
@@ -91,7 +76,7 @@ export default async function FacilitiesPage({
                   id="q"
                   name="q"
                   type="search"
-                  placeholder="e.g. Sunrise, Valley…"
+                  placeholder="e.g. Sunrise, Valley..."
                   defaultValue={params.q ?? ""}
                 />
               </div>
@@ -99,9 +84,9 @@ export default async function FacilitiesPage({
                 <label htmlFor="city">City</label>
                 <select id="city" name="city" defaultValue={params.city ?? ""}>
                   <option value="">All cities</option>
-                  {cities.map((c) => (
-                    <option key={c} value={c}>
-                      {toTitleCase(c)}
+                  {cities.map((city) => (
+                    <option key={city} value={city}>
+                      {toTitleCase(city)}
                     </option>
                   ))}
                 </select>
@@ -110,9 +95,9 @@ export default async function FacilitiesPage({
                 <label htmlFor="zip">ZIP code</label>
                 <select id="zip" name="zip" defaultValue={params.zip ?? ""}>
                   <option value="">All ZIPs</option>
-                  {zips.map((z) => (
-                    <option key={z} value={z}>
-                      {z}
+                  {zips.map((zip) => (
+                    <option key={zip} value={zip}>
+                      {zip}
                     </option>
                   ))}
                 </select>
@@ -121,8 +106,8 @@ export default async function FacilitiesPage({
                 <label htmlFor="size">Size</label>
                 <select id="size" name="size" defaultValue={params.size ?? ""}>
                   <option value="">Any size</option>
-                  <option value="small">Small (1–15 beds)</option>
-                  <option value="medium">Medium (16–50 beds)</option>
+                  <option value="small">Small (1-15 beds)</option>
+                  <option value="medium">Medium (16-50 beds)</option>
                   <option value="large">Large (51+ beds)</option>
                 </select>
               </div>
@@ -139,11 +124,7 @@ export default async function FacilitiesPage({
             </form>
           </div>
 
-          {error && (
-            <p className="errorBanner">
-              Unable to load facilities at this time.
-            </p>
-          )}
+          {error && <p className="errorBanner">Unable to load facilities at this time.</p>}
 
           {!error && (
             <p className="facilityResultCount">
@@ -161,40 +142,28 @@ export default async function FacilitiesPage({
                 <Link href="/get-help" className="inlineTextLink">
                   submit your intake
                 </Link>{" "}
-                and we will match you within one business day.
+                so our staff can review your situation and suggest next steps.
               </p>
             </div>
           ) : (
             <div className="facilityGrid">
-              {facilities.map((f) => (
-                <Link
-                  key={f.id}
-                  href={`/facilities/${f.id}`}
-                  className="facilityCardLink"
-                >
+              {facilities.map((facility) => (
+                <Link key={facility.id} href={`/facilities/${facility.id}`} className="facilityCardLink">
                   <article className="facilityCard">
-                    <h2 className="facilityCardName">
-                      {toTitleCase(f.name)}
-                    </h2>
-                    {(f.city || f.state) && (
+                    <h2 className="facilityCardName">{toTitleCase(facility.name)}</h2>
+                    {(facility.city || facility.state) && (
                       <p className="facilityCardLocation">
-                        {[
-                          f.city ? toTitleCase(f.city) : null,
-                          f.state,
-                          f.zip,
-                        ]
+                        {[facility.city ? toTitleCase(facility.city) : null, facility.state, facility.zip]
                           .filter(Boolean)
                           .join(", ")}
                       </p>
                     )}
                     <div className="facilityCardMeta">
-                      {f.capacity != null && (
-                        <span className="facilityTag">{f.capacity} beds</span>
+                      {facility.capacity != null && (
+                        <span className="facilityTag">{facility.capacity} beds</span>
                       )}
                     </div>
-                    {f.phone && (
-                      <span className="facilityCardPhone">{f.phone}</span>
-                    )}
+                    {facility.phone && <span className="facilityCardPhone">{facility.phone}</span>}
                   </article>
                 </Link>
               ))}
@@ -205,11 +174,9 @@ export default async function FacilitiesPage({
 
       <div className="facilitiesHelpBand">
         <div className="container">
-          <p className="facilitiesHelpText">
-            Not sure which facility fits your situation?
-          </p>
+          <p className="facilitiesHelpText">Not sure which facility fits your situation?</p>
           <Link href="/get-help" className="primaryButton">
-            Get matched — it&apos;s free
+            Start an intake
           </Link>
         </div>
       </div>
