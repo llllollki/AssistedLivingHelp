@@ -103,8 +103,7 @@ export default async function LeadDetailPage({
     { data: staffUsers },
     { data: careProfile },
     { data: matches },
-    { data: consents },
-    { data: outboundComms }
+    { data: consents }
   ] = await Promise.all([
     supabase
       .from("alh_interactions")
@@ -134,14 +133,7 @@ export default async function LeadDetailPage({
         "id, consent_type, channel, consent_state, consent_text_version, source_page, consent_source, consent_basis, granted_at, revoked_at, created_at"
       )
       .eq("lead_id", id)
-      .order("created_at", { ascending: false }),
-    supabase
-      .from("outbound_comms")
-      .select(
-        "id, channel, recipient, message_type, attempted_at, status, provider_message_id, error_message"
-      )
-      .eq("lead_id", id)
-      .order("attempted_at", { ascending: false })
+      .order("created_at", { ascending: false })
   ]);
 
   const matchedFacilityIds = (matches ?? [])
@@ -617,54 +609,6 @@ export default async function LeadDetailPage({
                     ? "All available facilities in this market are already matched."
                     : "No facilities available for this market yet."}
                 </p>
-              )}
-            </div>
-
-            <div className="adminCard">
-              <h2>Outbound communications</h2>
-              <p className="tableSecondary" style={{ marginBottom: "0.75rem" }}>
-                Email and SMS attempts sent after intake. Status reflects delivery to the provider,
-                not confirmed receipt by the family.
-              </p>
-              {!outboundComms || outboundComms.length === 0 ? (
-                <p className="tableSecondary">No outbound communications logged.</p>
-              ) : (
-                <div className="interactionFeed">
-                  {outboundComms.map((comm) => (
-                    <div key={comm.id} className="interactionItem">
-                      <div className="interactionMeta">
-                        <span className="interactionType">{comm.channel.toUpperCase()}</span>
-                        <span
-                          className={`statusBadge statusBadge--${
-                            comm.status === "sent"
-                              ? "matched"
-                              : comm.status === "failed"
-                              ? "closed_lost"
-                              : "new"
-                          }`}
-                        >
-                          {comm.status}
-                        </span>
-                        <span className="interactionDate">
-                          {new Date(comm.attempted_at).toLocaleString()}
-                        </span>
-                      </div>
-                      <p style={{ fontSize: "0.8rem", color: "var(--muted)", margin: "0.2rem 0 0" }}>
-                        To: {comm.recipient} &middot; {comm.message_type}
-                      </p>
-                      {comm.provider_message_id && (
-                        <p style={{ fontSize: "0.78rem", color: "var(--muted)", margin: "0.1rem 0 0" }}>
-                          Provider ID: {comm.provider_message_id}
-                        </p>
-                      )}
-                      {comm.error_message && (
-                        <p style={{ fontSize: "0.78rem", color: "var(--error, #dc2626)", margin: "0.1rem 0 0" }}>
-                          Error: {comm.error_message}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
               )}
             </div>
 

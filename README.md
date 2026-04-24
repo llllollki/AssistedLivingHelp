@@ -12,8 +12,8 @@ This repo contains the first MVP scaffold for Assisted Living Help:
 - Next.js App Router
 - TypeScript
 - Supabase Auth + Postgres
-- Resend for email
-- Twilio for SMS
+- Google Workspace for MVP email operations
+- Google Voice for MVP phone and SMS operations
 
 ## Local Setup
 
@@ -22,6 +22,16 @@ This repo contains the first MVP scaffold for Assisted Living Help:
 3. Fill in Supabase and messaging credentials.
 4. Install dependencies with `npm install`.
 5. Run `npm run dev`.
+
+## MVP Communications Plan
+
+For Phase 1 MVP, family and facility communications should assume:
+
+- Google Workspace as the primary email system
+- Google Voice as the primary phone number and SMS workflow
+- manual concierge follow-up as the default operating model
+
+Do not assume a fully automated transactional email or SMS provider for MVP unless that decision changes later.
 
 ## MVP Scope
 
@@ -47,5 +57,5 @@ The scaffold is intentionally narrow:
 - Supabase anon key
 - Supabase service role key
 - Supabase project ID
-- confirmation of whether you want email via Resend and SMS via Twilio for MVP
+- confirmation of the Google Workspace inbox and Google Voice number to use for MVP communications
 - GitHub repo URL if you want me to prepare for push/deploy wiring

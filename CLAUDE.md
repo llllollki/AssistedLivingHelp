@@ -195,6 +195,13 @@ The confirmation layer should support:
 - email confirmation
 - SMS confirmation when the user has given appropriate permission
 
+Phase 1 MVP communications note:
+
+- Google Workspace should be treated as the primary MVP email system
+- Google Voice should be treated as the primary MVP phone number and SMS workflow
+- manual outreach and follow-up are acceptable defaults for MVP
+- do not assume a fully automated Resend/Twilio-style communications layer unless the operating plan changes
+
 The confirmation message should say:
 
 - the request was received
@@ -208,6 +215,7 @@ Customer communication requirements:
 - all outbound communications should be logged
 - the system should support SMS, email, and phone-call workflows
 - communication preference and opt-out status must be respected
+- MVP implementation should support manual Google Workspace and Google Voice operations even if deeper automation is deferred
 
 ### 4. Facility Discovery And Match Presentation
 

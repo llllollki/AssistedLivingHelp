@@ -34,9 +34,9 @@ export default async function ConfirmationPage({ searchParams }: ConfirmationPag
           <h2>What to expect next</h2>
           <p>
             A staff member will review your intake and follow up within 1 business day using the
-            channels you allowed. If you opted in to email or SMS, a confirmation may arrive
-            shortly. Email and SMS outreach are manual right now, and we do not claim live
-            availability or automatic placement.
+            contact method you selected. All outreach is handled personally by our team — we do not
+            use automated messaging. No facility will be contacted without your consent, and we do
+            not claim live availability or automatic placement.
           </p>
         </div>
 

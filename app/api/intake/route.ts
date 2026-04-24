@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabasePublicClient, getSupabaseServiceRoleClient } from "@/lib/supabase";
+import { getSupabasePublicClient } from "@/lib/supabase";
 import { parseIntakeForm, validateIntakePayload } from "@/lib/validation";
 import { checkIntakeRateLimit } from "@/lib/rate-limit";
-import {
-  sendIntakeConfirmationEmail,
-  sendIntakeConfirmationSms
-} from "@/lib/comms";
 
 export async function POST(request: NextRequest) {
   const ip =
@@ -77,13 +73,6 @@ export async function POST(request: NextRequest) {
   }
 
   const result = data[0] as { lead_id: string; market_slug: string };
-
-  // Send confirmations. Must complete before the function returns so the
-  // serverless runtime doesn't terminate the work mid-flight. Intake
-  // success does not depend on send success — all errors are swallowed
-  // and logged to outbound_comms.
-  await sendConfirmations(result.lead_id);
-
   const params = new URLSearchParams({
     lead: result.lead_id,
     market: result.market_slug
@@ -91,67 +80,4 @@ export async function POST(request: NextRequest) {
   return NextResponse.redirect(
     new URL(`/confirmation?${params.toString()}`, request.url)
   );
-}
-
-async function sendConfirmations(leadId: string) {
-  const supabase = getSupabaseServiceRoleClient();
-  if (!supabase) return;
-
-  const [{ data: lead }, { data: consents }] = await Promise.all([
-    supabase
-      .from("leads")
-      .select("first_name, email, phone")
-      .eq("id", leadId)
-      .single(),
-    supabase
-      .from("consents")
-      .select("consent_type, channel, consent_state, consent_source, consent_basis, consent_text_version")
-      .eq("lead_id", leadId)
-  ]);
-
-  if (!lead) return;
-
-  const emailConsent = consents?.find(
-    (c) => c.consent_type === "email" && c.channel === "email"
-  );
-  const smsConsent = consents?.find(
-    (c) => c.consent_type === "sms" && c.channel === "sms"
-  );
-
-  const baseConsent = {
-    consentSource:
-      emailConsent?.consent_source ?? smsConsent?.consent_source ?? null,
-    consentBasis:
-      emailConsent?.consent_basis ?? smsConsent?.consent_basis ?? null,
-    consentVersion:
-      emailConsent?.consent_text_version ??
-      smsConsent?.consent_text_version ??
-      null
-  };
-
-  const sends: Promise<void>[] = [];
-
-  if (lead.email && emailConsent?.consent_state === "granted") {
-    sends.push(
-      sendIntakeConfirmationEmail({
-        leadId,
-        email: lead.email,
-        firstName: lead.first_name,
-        ...baseConsent
-      })
-    );
-  }
-
-  if (lead.phone && smsConsent?.consent_state === "granted") {
-    sends.push(
-      sendIntakeConfirmationSms({
-        leadId,
-        phone: lead.phone,
-        firstName: lead.first_name,
-        ...baseConsent
-      })
-    );
-  }
-
-  await Promise.allSettled(sends);
 }

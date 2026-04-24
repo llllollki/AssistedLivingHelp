@@ -1,9 +1,16 @@
--- Phase 1 comms migration
--- Adds: intake_rate_limits, outbound_comms, check_and_increment_rate_limit
--- Apply against your Supabase project via the SQL editor or CLI.
+-- Phase 1 rate-limiting migration
+-- Adds: intake_rate_limits table + check_and_increment_rate_limit function
+-- Apply via the Supabase Dashboard SQL editor or the Supabase CLI.
+--
+-- Communications are manual for Phase 1 MVP:
+--   Email — Google Workspace (staff sends manually, logs on the lead)
+--   Phone/SMS — Google Voice (staff calls/texts manually, logs on the lead)
+-- No automated delivery infrastructure is used.
 
 -- ============================================================
 -- intake_rate_limits
+-- Per-IP 15-minute bucket counter for /api/intake.
+-- Only the service role touches this table (bypasses RLS).
 -- ============================================================
 
 create table if not exists public.intake_rate_limits (
@@ -16,9 +23,12 @@ create table if not exists public.intake_rate_limits (
 
 alter table public.intake_rate_limits enable row level security;
 
+-- No public policies — service role bypasses RLS; all other roles are blocked.
+
 create index if not exists idx_intake_rate_limits_ip_window
   on public.intake_rate_limits (ip, window_start desc);
 
+-- Atomically increments the counter and returns the new count.
 create or replace function public.check_and_increment_rate_limit(
   p_ip           text,
   p_window_start timestamptz
@@ -45,33 +55,3 @@ $$;
 
 grant execute on function public.check_and_increment_rate_limit(text, timestamptz)
   to service_role;
-
--- ============================================================
--- outbound_comms
--- ============================================================
-
-create table if not exists public.outbound_comms (
-  id                   uuid        primary key default gen_random_uuid(),
-  lead_id              uuid        references public.leads(id) on delete cascade,
-  channel              text        not null,
-  recipient            text        not null,
-  message_type         text        not null,
-  attempted_at         timestamptz not null default now(),
-  status               text        not null,
-  provider_message_id  text,
-  error_message        text,
-  consent_source       text,
-  consent_basis        text,
-  consent_version      text
-);
-
-alter table public.outbound_comms enable row level security;
-
-drop policy if exists "staff can read outbound_comms" on public.outbound_comms;
-create policy "staff can read outbound_comms"
-on public.outbound_comms for select
-using (public.is_staff());
-
-create index if not exists idx_outbound_comms_lead_id
-  on public.outbound_comms (lead_id, attempted_at desc)
-  where lead_id is not null;
