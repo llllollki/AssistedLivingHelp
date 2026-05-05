@@ -31,7 +31,7 @@ export default function MarketsPage() {
           <div className="marketsGrid">
             {launchMarkets.map((market) => (
               <article key={market.slug} className="infoCard">
-                <p className="marketAnchor">{market.hospitalAnchor}</p>
+                <p className="marketAnchor">Near {market.hospitalAnchor}</p>
                 <h2>{market.name}</h2>
                 <p>{market.summary}</p>
                 <ul className="tagList">

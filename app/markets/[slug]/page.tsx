@@ -19,7 +19,7 @@ export default async function MarketPage({ params }: MarketPageProps) {
     <>
       <div className="pageHero">
         <div className="container">
-          <p className="eyebrow">{market.hospitalAnchor}</p>
+          <p className="eyebrow">Near {market.hospitalAnchor}</p>
           <h1>{market.name}</h1>
           <p className="sectionIntro">{market.summary}</p>
         </div>

@@ -39,7 +39,7 @@ export const launchMarkets: LaunchMarket[] = [
     slug: "menifee-global",
     name: "Menifee Global",
     hospitalAnchor: "Menifee Global Medical Center",
-    summary: "Local assisted living help for Menifee-area families and referring partners.",
+    summary: "Local assisted living help for Menifee-area families and facility partners.",
     cities: ["Menifee", "Sun City", "Perris", "Murrieta"]
   }
 ];
