@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabasePublicClient } from "@/lib/supabase";
 import { parseIntakeForm, validateIntakePayload } from "@/lib/validation";
 import { checkIntakeRateLimit } from "@/lib/rate-limit";
+import { sendIntakeConfirmationEmail } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   const ip =
@@ -73,6 +74,17 @@ export async function POST(request: NextRequest) {
   }
 
   const result = data[0] as { lead_id: string; market_slug: string };
+
+  // Transactional confirmation email — sent only when the lead provided an email
+  // AND checked email consent. sendIntakeConfirmationEmail never throws, so a mail
+  // failure cannot break intake: the lead is already saved and we still redirect.
+  if (payload.email && payload.consentEmail) {
+    await sendIntakeConfirmationEmail({
+      to: payload.email,
+      firstName: payload.firstName
+    });
+  }
+
   const params = new URLSearchParams({
     lead: result.lead_id,
     market: result.market_slug
