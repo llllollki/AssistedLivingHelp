@@ -52,7 +52,10 @@ export async function sendIntakeConfirmationEmail(opts: {
     ``,
     `If you need to reach us in the meantime, just reply to this email.`,
     ``,
-    `— The ${SITE_NAME} team`
+    `— The ${SITE_NAME} team`,
+    ``,
+    `${SITE_NAME} · assistedlivinghelp.co`,
+    `You're receiving this email because you requested help through our website.`
   ].join("\n");
 
   const html = `
@@ -61,6 +64,11 @@ export async function sendIntakeConfirmationEmail(opts: {
       <p>Thanks for reaching out to ${escapeHtml(SITE_NAME)}. We've received your request and a member of our team will follow up shortly to help you find the right assisted living options.</p>
       <p>If you need to reach us in the meantime, just reply to this email.</p>
       <p>— The ${escapeHtml(SITE_NAME)} team</p>
+      <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 20px 0;" />
+      <p style="color: #888888; font-size: 12px; line-height: 1.5;">
+        ${escapeHtml(SITE_NAME)} · <a href="https://assistedlivinghelp.co" style="color: #888888;">assistedlivinghelp.co</a><br />
+        You're receiving this email because you requested help through our website.
+      </p>
     </div>
   `;
 
